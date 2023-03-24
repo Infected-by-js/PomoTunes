@@ -6,6 +6,8 @@ specifiers:
   '@types/react-dom': ^18.0.11
   '@vitejs/plugin-react': ^3.1.0
   autoprefixer: ^10.4.14
+  classnames: ^2.3.2
+  immer: ^9.0.19
   postcss: ^8.4.21
   prettier: ^2.8.4
   react: ^18.2.0
@@ -16,6 +18,8 @@ specifiers:
   vite: ^4.2.0
 
 dependencies:
+  classnames: 2.3.2
+  immer: 9.0.19
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-icons: 4.8.0_react@18.2.0
@@ -722,6 +726,10 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+  /classnames/2.3.2:
+    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
+    dev: false
+
   /color-convert/1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
     dependencies:
@@ -903,6 +911,10 @@ packages:
     dependencies:
       function-bind: 1.1.1
     dev: true
+
+  /immer/9.0.19:
+    resolution: {integrity: sha512-eY+Y0qcsB4TZKwgQzLaE/lqYMlKhv5J9dyd2RhhtGhNo2njPXDqU9XPfcNfa3MIDsdtZt5KlkIsirlo4dHsWdQ==}
+    dev: false
 
   /is-binary-path/2.1.0:
     resolution: {integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==}

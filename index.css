@@ -1,6 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* content="#319197" */
+/* content="#872e4e" */
 
 @layer base {
   [data-theme='focus'] {
@@ -29,11 +34,11 @@
 }
 
 :root {
-  font-family: 'Montserrat Alternates', system-ui, sans-serif;
-
+  font-family: 'Space Mono', system-ui, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  user-select: none;
 }

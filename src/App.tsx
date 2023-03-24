@@ -1,11 +1,11 @@
 import Navigator from '@/core/navigation/Navigator';
-import {ThemeProvider} from '@/core/providers/ThemeProvider';
+import {SettingsProvider} from './core/providers/SettingsProvider';
 
 const App = () => {
   return (
-    <ThemeProvider>
+    <SettingsProvider>
       <Navigator />
-    </ThemeProvider>
+    </SettingsProvider>
   );
 };
 
