@@ -1,3 +1,1 @@
-import Mode from './ui/Mode';
-
-export {Mode as ModeSelector};
+export {default as ModeSelector} from './ui/Mode';
