@@ -1,5 +1,5 @@
 import {FC, HTMLProps, useRef} from 'react';
-import cn from 'classnames';
+import clsx from 'clsx';
 import {Popup} from 'reactjs-popup';
 import {PopupActions} from 'reactjs-popup/dist/types';
 import ModeBtn from './ModeBtn';
@@ -23,7 +23,7 @@ const Mode: FC<Props> = ({mode, setMode, classes}) => {
   };
 
   return (
-    <div className={cn('flex justify-center', classes)}>
+    <div className={clsx('flex justify-center', classes)}>
       <Popup
         ref={ref}
         closeOnDocumentClick
