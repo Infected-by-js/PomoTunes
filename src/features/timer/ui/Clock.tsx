@@ -1,5 +1,5 @@
 import {FC, HTMLProps} from 'react';
-import cn from 'classnames';
+import clsx from 'clsx';
 import {secondsToMinutes} from '@/utils/time';
 
 interface Props {
@@ -12,7 +12,7 @@ const Clock: FC<Props> = ({seconds, classes}) => {
 
   return (
     <div
-      className={cn(
+      className={clsx(
         classes,
         'text-[256px] leading-[85%] flex flex-col items-center font-normal text-dark dark:text-light pointer-events-none'
       )}

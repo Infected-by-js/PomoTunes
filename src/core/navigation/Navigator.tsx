@@ -2,6 +2,7 @@ import {useEffect} from 'react';
 import {useSettings} from '@/hooks/useSettings';
 import PageContainer from '@/components/PageContainer';
 import {ModeSelector} from '@/features/mode-selector';
+import {Timer} from '@/features/timer';
 
 const Navigator = () => {
   const {state, dispatch} = useSettings();
@@ -10,7 +11,6 @@ const Navigator = () => {
 
   useEffect(() => {
     // TODO: GET FROM LS
-
     // TODO: SET TO LS
 
     document.documentElement.dataset.theme = state.mode;
@@ -22,7 +22,8 @@ const Navigator = () => {
       <div className="grid grid-cols-3 gap-5">
         <div className=""></div>
         <div className="flex flex-col items-center ">
-          <ModeSelector mode={state.mode} setMode={setMode} classes="my-16" />
+          <ModeSelector mode={state.mode} setMode={setMode} classes="my-10" />
+          <Timer setMode={setMode} />
         </div>
         <div className=""></div>
       </div>
