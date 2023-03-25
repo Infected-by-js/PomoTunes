@@ -7,6 +7,7 @@ import {
 } from 'react-icons/tb';
 import useTimer from '../model/useTimer';
 import Clock from './Clock';
+import LinearProgress from './LinearProgress';
 import TimerBtn from './TimerBtn';
 
 interface Props {
@@ -17,14 +18,20 @@ interface Props {
 const Timer: FC<Props> = () => {
   const {progress, start, pause, timeLeft, isTicking, stop} = useTimer({
     minutes: 0.1,
-    onComplete: () => {
-      console.log('ON COMPLETER');
-    },
+    onComplete: () => {},
   });
 
+  return (
     <>
       <Clock seconds={timeLeft} />
 
+      <LinearProgress
+        progress={progress}
+        placeholderColorClass="accent-300"
+        progressColorClass="accent-500"
+        heightClass="h-1"
+        wrapperClass="mt-6 w-3/4"
+      />
 
       <div className="mt-4  grid grid-cols-3  gap-4 grid-rows-2 ">
         <TimerBtn
