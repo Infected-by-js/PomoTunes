@@ -1,5 +1,5 @@
-import Navigator from '@/core/navigation/Navigator';
-import {SettingsProvider} from './core/providers/SettingsProvider';
+import {SettingsProvider} from '@/contexts/settings';
+import Navigator from '@/pages/Navigator';
 
 const App = () => {
   return (

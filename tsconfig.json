@@ -20,5 +20,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "src/types/global.d.ts", "vite.config.ts", "index.tsx", "index.tsx"]
+  "include": ["src", "src/global.d.ts", "vite.config.ts", "index.tsx", "index.tsx"]
 }

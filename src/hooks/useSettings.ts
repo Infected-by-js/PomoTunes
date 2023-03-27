@@ -1,4 +1,4 @@
 import {useContext} from 'react';
-import {SettingsContext} from '@/core/providers/SettingsProvider';
+import {SettingsContext} from '@/contexts/settings';
 
 export const useSettings = () => useContext(SettingsContext);
