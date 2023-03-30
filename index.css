@@ -42,3 +42,7 @@
   -webkit-text-size-adjust: 100%;
   user-select: none;
 }
+
+* {
+  box-sizing: border-box;
+}

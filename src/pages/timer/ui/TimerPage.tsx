@@ -1,8 +1,9 @@
-import {FC, ReactNode, useEffect} from 'react';
+import {FC, useEffect} from 'react';
 import {TbPlayerStopFilled, TbPlayerTrackNextFilled} from 'react-icons/tb';
 import {useSettings} from '@/hooks/useSettings';
 import {ConfirmMessage} from '@/shared/enums';
 import {updateTitle} from '@/shared/helpers';
+import eventsBus from '@/shared/lib/eventsBus';
 import ProgressLinear from '@/shared/ui/ProgressLinear';
 import {useTimer} from '../model/useTimer';
 import Clock from './Clock';
@@ -10,15 +11,28 @@ import ModeSelector from './ModeSelector';
 import TimerBtn from './TimerBtn';
 import TimerBtnMain from './TimerBtnMain';
 
-interface Props {
-  children?: ReactNode;
-}
+interface Props {}
 
 const TimerPage: FC<Props> = () => {
   const {state, dispatch} = useSettings();
   const {progress, start, pause, reset, timeLeft, isTicking, withConfirm} = useTimer({
     minutes: state.modes[state.mode].time,
+    onPause: () => {
+      // player.pause()
+    },
+    onStart: () => {
+      eventsBus.startTimer.emit();
+      // notification.sound(SOUNDS.BEGIN)
+    },
+    onReset: () => {
+      // player.pause()
+    },
     onComplete: () => {
+      // if(state.mode === 'focus') {
+      //   player.pause(); | player.setVolume(player.vulume  * 0.1)
+      // }
+      // notification.sound(SOUNDS.COMPLETE)
+
       nextMode();
     },
   });
