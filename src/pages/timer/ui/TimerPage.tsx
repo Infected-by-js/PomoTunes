@@ -18,16 +18,13 @@ const TimerPage: FC<Props> = () => {
   const {progress, start, pause, reset, timeLeft, isTicking, withConfirm} = useTimer({
     minutes: state.modes[state.mode].time,
     onPause: () => {
-      // player.pause()
+      eventsBus.pauseTimer.emit();
     },
     onStart: () => {
       eventsBus.startTimer.emit();
-      // notification.sound(SOUNDS.BEGIN)
-    },
-    onReset: () => {
-      // player.pause()
     },
     onComplete: () => {
+      eventsBus.completeTimerMode.emit(state.mode);
       // if(state.mode === 'focus') {
       //   player.pause(); | player.setVolume(player.vulume  * 0.1)
       // }

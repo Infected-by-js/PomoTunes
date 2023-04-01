@@ -1,34 +1,35 @@
-import {AnyFunction} from './types';
+import {AnyFunction, CleanUpFunction, EventName} from './types';
 
-const subscriptions = new Map<string, Set<AnyFunction>>();
+class EventsBus {
+  private subscriptions: Map<string, Set<AnyFunction>>;
 
-const subscribe = (eventName: string, callback: AnyFunction) => {
-  if (!subscriptions.has(eventName)) {
-    subscriptions.set(eventName, new Set());
+  constructor() {
+    this.subscriptions = new Map();
   }
 
-  const callbacks = subscriptions.get(eventName) as Set<AnyFunction>;
+  public subscribe(eventName: EventName, callback: AnyFunction): CleanUpFunction {
+    if (!this.subscriptions.has(eventName)) {
+      this.subscriptions.set(eventName, new Set());
+    }
 
-  callbacks.add(callback);
+    const callbacks = this.subscriptions.get(eventName) as Set<AnyFunction>;
 
-  return () => {
-    callbacks.delete(callback);
+    callbacks.add(callback);
 
-    if (!callbacks.size) subscriptions.delete(eventName);
-  };
-};
+    return () => {
+      callbacks.delete(callback);
 
-const emit = (eventName: string, ...args: any[]) => {
-  if (!subscriptions.has(eventName)) return;
+      if (!callbacks.size) this.subscriptions.delete(eventName);
+    };
+  }
 
-  const callbacks = subscriptions.get(eventName);
+  public emit(eventName: EventName, ...args: any[]): void {
+    if (!this.subscriptions.has(eventName)) return;
 
-  callbacks?.forEach((callback) => {
-    callback(...args);
-  });
-};
+    const callbacks = this.subscriptions.get(eventName);
 
-export default {
-  subscribe,
-  emit,
-};
+    callbacks?.forEach((callback) => callback(...args));
+  }
+}
+
+export default new EventsBus();

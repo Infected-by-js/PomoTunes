@@ -1,5 +1,15 @@
-import startTimer from './events/startTimer';
+import {createEventHelper} from './helpers';
+import {EventHelperFunction, EventName} from './types';
 
-export default {
-  startTimer,
+type TimerEvents = {
+  [key in EventName]: ReturnType<EventHelperFunction>;
 };
+
+const timerEvents: TimerEvents = {
+  startTimer: createEventHelper('startTimer'),
+  stopTimer: createEventHelper('stopTimer'),
+  pauseTimer: createEventHelper('pauseTimer'),
+  completeTimerMode: createEventHelper('completeTimerMode'),
+};
+
+export default timerEvents;

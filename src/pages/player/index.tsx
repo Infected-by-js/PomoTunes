@@ -21,35 +21,33 @@ const Player: FC<Props> = () => {
     console.log('Player state changed:', event);
   };
 
-  // const unsubscribe = eventBus.startTimer.subscribe(callback);
-  // unsubscribe()
+  const play = () => player?.playVideo();
+  const pause = () => player?.pauseVideo();
+  const stop = () => player.stopVideo();
+
+  const changeVolume = (currentMode: TimerMode) => {
+    const currentVolume: number = player.playerInfo.volume;
+    player.setVolume(currentVolume * 0.3);
+  };
 
   useEffect(() => {
-    const play = () => player.playVideo();
+    const playCleanUp = eventsBus.startTimer.subscribe(play);
+    const pauseCleanUp = eventsBus.pauseTimer.subscribe(pause);
+    const stopCleanUp = eventsBus.stopTimer.subscribe(stop);
+    const completeCleanUp = eventsBus.completeTimerMode.subscribe(changeVolume);
 
-    const subscribe = eventsBus.startTimer.subscribe(play);
+    return () => {
+      playCleanUp();
+      pauseCleanUp();
+      stopCleanUp();
+      completeCleanUp();
 
-    return () => subscribe();
-  });
-
-  const stop = () => {
-    player.stopVideo();
-  };
-
-  const start = () => {
-    player.playVideo();
-  };
-
-  const pause = () => {
-    player.pauseVideo();
-  };
+      console.log('clean up');
+    };
+  }, [player]);
 
   return (
     <>
-      <button onClick={start}>start</button>
-      <button onClick={stop}>stop</button>
-      <button onClick={pause}>pause</button>
-
       <div className="w-[410px] h-[231px] relative shadow-2xl flex justify-center items-center drop-shadow-xl rounded-3xl overflow-hidden">
         {!isReady && (
           <div className="animate-pulse  w-full h-full bg-accent-300 absolute top-0 left-0"></div>
