@@ -4,6 +4,7 @@ export interface ModeSettings {
   time: number;
 }
 export interface State {
+  videoId: string;
   mode: TimerMode;
   isAutoBreaks: boolean;
   isAutoFocus: boolean;

@@ -3,60 +3,52 @@ import clsx from 'clsx';
 import Youtube, {YouTubeEvent, YouTubePlayer} from 'react-youtube';
 import eventsBus from '@/shared/lib/eventsBus';
 
-interface Props {}
-const videoId = '5yx6BWlEVcY';
+interface Props {
+  videoId: string;
+  onReady: (isReady: boolean) => void;
+}
 
-const Player: FC<Props> = () => {
+const Player: FC<Props> = ({videoId, onReady}) => {
   const [isReady, setIsReady] = useState(false);
   const [player, setPlayer] = useState<YouTubePlayer>();
 
   const onPlayerReady = (event: YouTubeEvent) => {
     setIsReady(true);
     setPlayer(event.target);
-
-    console.log('Player is ready:', event.target);
+    onReady(true);
   };
 
-  const onPlayerStateChange = (event: YouTubeEvent) => {
-    console.log('Player state changed:', event);
-  };
-
-  const play = () => player?.playVideo();
-  const pause = () => player?.pauseVideo();
-  const stop = () => player.stopVideo();
-
-  const changeVolume = (currentMode: TimerMode) => {
-    const currentVolume: number = player.playerInfo.volume;
-    player.setVolume(currentVolume * 0.3);
-  };
+  const play = () => player.playVideo();
+  const pause = () => player.pauseVideo();
+  const changeVolume = (percents: number) => player.setVolume(percents);
 
   useEffect(() => {
     const playCleanUp = eventsBus.startTimer.subscribe(play);
     const pauseCleanUp = eventsBus.pauseTimer.subscribe(pause);
-    const stopCleanUp = eventsBus.stopTimer.subscribe(stop);
-    const completeCleanUp = eventsBus.completeTimerMode.subscribe(changeVolume);
+    const focusStartCleanUp = eventsBus.focusStart.subscribe(() => changeVolume(100));
+    const focusEndCleanUp = eventsBus.focusEnd.subscribe(() => changeVolume(30));
 
     return () => {
       playCleanUp();
       pauseCleanUp();
-      stopCleanUp();
-      completeCleanUp();
-
-      console.log('clean up');
+      focusStartCleanUp();
+      focusEndCleanUp();
     };
   }, [player]);
 
   return (
     <>
-      <div className="w-[410px] h-[231px] relative shadow-2xl flex justify-center items-center drop-shadow-xl rounded-3xl overflow-hidden">
+      <div
+        className={
+          'w-[320px] h-[180px] relative shadow-xl flex justify-center items-center drop-shadow-lg rounded-3xl overflow-hidden'
+        }
+      >
         {!isReady && (
           <div className="animate-pulse  w-full h-full bg-accent-300 absolute top-0 left-0"></div>
         )}
-
         <Youtube
           videoId={videoId}
           onReady={onPlayerReady}
-          onStateChange={onPlayerStateChange}
           className={clsx('w-full h-full', isReady ? 'block' : 'none')}
           iframeClassName="w-full h-full"
           opts={{

@@ -60,7 +60,7 @@ export const useTimer = ({minutes, onStart, onReset, onPause, onComplete}: Props
       let allowed = true;
 
       if (isTicking) {
-        pause();
+        // pause();
         allowed = confirm(msg);
         start();
       }

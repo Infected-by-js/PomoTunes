@@ -10,6 +10,8 @@ const timerEvents: TimerEvents = {
   stopTimer: createEventHelper('stopTimer'),
   pauseTimer: createEventHelper('pauseTimer'),
   completeTimerMode: createEventHelper('completeTimerMode'),
+  focusStart: createEventHelper('focusStart'),
+  focusEnd: createEventHelper('focusEnd'),
 };
 
 export default timerEvents;

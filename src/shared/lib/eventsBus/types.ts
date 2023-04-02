@@ -1,4 +1,10 @@
-export type EventName = 'startTimer' | 'stopTimer' | 'pauseTimer' | 'completeTimerMode';
+export type EventName =
+  | 'startTimer'
+  | 'stopTimer'
+  | 'pauseTimer'
+  | 'completeTimerMode'
+  | 'focusStart'
+  | 'focusEnd';
 
 export type AnyFunction = (...args: any) => any;
 export type CleanUpFunction = () => void;
