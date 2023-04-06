@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react';
 import clsx from 'clsx';
 import Youtube, {YouTubeEvent, YouTubePlayer} from 'react-youtube';
-import eventsBus from '@/shared/lib/eventsBus';
+import eventBus from '@/shared/lib/event-bus';
 
 interface Props {
   videoId: string;
@@ -23,10 +23,10 @@ const Player: FC<Props> = ({videoId, onReady}) => {
   const changeVolume = (percents: number) => player.setVolume(percents);
 
   useEffect(() => {
-    const playCleanUp = eventsBus.startTimer.subscribe(play);
-    const pauseCleanUp = eventsBus.pauseTimer.subscribe(pause);
-    const focusStartCleanUp = eventsBus.focusStart.subscribe(() => changeVolume(100));
-    const focusEndCleanUp = eventsBus.focusEnd.subscribe(() => changeVolume(30));
+    const playCleanUp = eventBus.startTimer.subscribe(play);
+    const pauseCleanUp = eventBus.pauseTimer.subscribe(pause);
+    const focusStartCleanUp = eventBus.focusStart.subscribe(() => changeVolume(100));
+    const focusEndCleanUp = eventBus.focusEnd.subscribe(() => changeVolume(30));
 
     return () => {
       playCleanUp();
