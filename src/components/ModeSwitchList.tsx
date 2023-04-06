@@ -18,12 +18,12 @@ const ModeSwitchList: FC<Props> = ({mode, selectMode}) => {
       onClick={() => selectMode(name)}
       key={name}
       className={clsx(
-        'text-dark focus:bg-accent-300 outline-none dark:text-accent-100 text-md flex items-center w-full h-10 hover:bg-accent-300 px-2 hover:cursor-pointer',
+        'text-dark  focus:bg-accent-300 outline-none dark:text-accent-100 text-sm flex items-center w-full h-10 hover:bg-accent-300 px-2 hover:cursor-pointer',
         mode === name ? 'font-semibold ' : ''
       )}
     >
-      <Icon size={20} className="mr-2" />
-      <p className="flex flex-grow mr-4">{modeToTitle(name)}</p>
+      <Icon size={20} className="mr-2 flex-shrink-0" />
+      <p className="flex flex-grow text-start  flex-nowrap">{modeToTitle(name)}</p>
       {keys?.length && <Keymap keys={keys} />}
     </button>
   );
