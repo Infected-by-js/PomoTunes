@@ -11,7 +11,7 @@ const Clock: FC<Props> = ({seconds}) => {
   return (
     <div
       className={
-        'text-[256px] leading-[85%] flex flex-col items-center font-normal text-dark dark:text-light pointer-events-none my-10'
+        'text-[180px] leading-[85%] flex flex-col items-center font-normal text-dark dark:text-light pointer-events-none'
       }
     >
       <span>{mm}</span>

@@ -1,10 +1,10 @@
 import {SettingsProvider} from '@/contexts/settings';
-import Navigator from '@/pages/Navigator';
+import Main from '@/pages/Main';
 
 const App = () => {
   return (
     <SettingsProvider>
-      <Navigator />
+      <Main />
     </SettingsProvider>
   );
 };

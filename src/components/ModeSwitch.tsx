@@ -1,21 +1,21 @@
 import {FC, useRef} from 'react';
 import Popup from 'reactjs-popup';
 import {PopupActions} from 'reactjs-popup/dist/types';
-import {MODE_ICON} from '../model/constants';
-import ModeSelectorBtn from './ModeSelectorBtn';
-import ModeSelectorList from './ModeSelectorList';
-import {ModeSettings} from '@/contexts/settings';
+import {MODE_ICON} from '../shared/constants';
+import ButtonTimer from './ButtonTimer';
+import ModeSwitchList from './ModeSwitchList';
 
 interface Props {
-  mode: ModeSettings;
+  mode: TimerMode;
   setMode: (mode: TimerMode) => void;
 }
 
-const ModeSelector: FC<Props> = ({mode, setMode}) => {
+const ModeSwitch: FC<Props> = ({mode, setMode}) => {
   const ref = useRef<PopupActions | null>(null);
+  const Icon = MODE_ICON[mode];
 
   const selectMode = (newMode: TimerMode) => {
-    if (newMode !== mode.id) {
+    if (newMode !== mode) {
       setMode(newMode);
     }
 
@@ -23,22 +23,26 @@ const ModeSelector: FC<Props> = ({mode, setMode}) => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center col-start-3">
       <Popup
         ref={ref}
         closeOnDocumentClick
-        trigger={<ModeSelectorBtn mode={mode.label} Icon={MODE_ICON[mode.id]} />}
+        trigger={
+          <ButtonTimer>
+            <Icon size={24} />
+          </ButtonTimer>
+        }
         closeOnEscape={true}
         position="right top"
         arrow={false}
         offsetX={20}
       >
         <div className="bg-accent-100 dark:bg-accent-900 drop-shadow-lg rounded-lg overflow-hidden">
-          <ModeSelectorList selectMode={selectMode} />
+          <ModeSwitchList selectMode={selectMode} mode={mode} />
         </div>
       </Popup>
     </div>
   );
 };
 
-export default ModeSelector;
+export default ModeSwitch;

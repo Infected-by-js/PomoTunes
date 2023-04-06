@@ -2,7 +2,7 @@ import {secondsToTime} from './utils';
 
 export const updateTitle = (seconds: number, mode: TimerMode) => {
   const {mm, ss} = secondsToTime(seconds);
-  const message = mode === 'focus' ? 'Time to focus!' : 'Time to break!';
+  const message = mode === 'focus' ? 'Time to focus!' : 'Time for a break!';
 
   document.title = `${mm}:${ss} - ${message} | PomoTunes`;
 };
