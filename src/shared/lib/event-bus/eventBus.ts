@@ -1,18 +1,18 @@
-import {AnyFunction, CleanUpFunction, EventName} from './types';
+import * as T from './types';
 
-class EventsBus {
-  private subscriptions: Map<string, Set<AnyFunction>>;
+class EventBus implements T.EventBus {
+  private subscriptions: T.Subscriptions;
 
   constructor() {
     this.subscriptions = new Map();
   }
 
-  public subscribe(eventName: EventName, callback: AnyFunction): CleanUpFunction {
+  public subscribe(eventName: T.EventName, callback: T.EventFunction): T.CleanUpFunction {
     if (!this.subscriptions.has(eventName)) {
       this.subscriptions.set(eventName, new Set());
     }
 
-    const callbacks = this.subscriptions.get(eventName) as Set<AnyFunction>;
+    const callbacks = this.subscriptions.get(eventName) as T.SubscriberEvents;
 
     callbacks.add(callback);
 
@@ -23,7 +23,7 @@ class EventsBus {
     };
   }
 
-  public emit(eventName: EventName, ...args: any[]): void {
+  public emit(eventName: T.EventName, ...args: Parameters<T.EventFunction>): void {
     if (!this.subscriptions.has(eventName)) return;
 
     const callbacks = this.subscriptions.get(eventName);
@@ -32,4 +32,4 @@ class EventsBus {
   }
 }
 
-export default new EventsBus();
+export default new EventBus();
