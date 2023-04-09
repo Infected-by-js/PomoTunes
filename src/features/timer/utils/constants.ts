@@ -13,10 +13,3 @@ export const MODE_ICON: Record<TimerMode, IconType> = {
   short_break: TbCoffee,
   long_break: TbPlant,
 };
-
-export const SOUNDS = {
-  BUTTON_PRESS: 'sounds/button-press.mp3',
-  BELL: 'sounds/alert-bell.mp3',
-  NOTIFICATION: 'sounds/notification.mp3',
-  CLOCK_ALARM: 'sounds/clock-alarm.mp3',
-};

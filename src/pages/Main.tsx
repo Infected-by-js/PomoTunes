@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import {TbAdjustmentsHorizontal, TbUser} from 'react-icons/tb';
-import {useSettings} from '@/hooks/useSettings';
-import PageContainer from '@/components/PageContainer';
-import Player from '@/components/Player';
-import Timer from '@/components/Timer';
+import {PageContainer} from '@/shared/components';
+import {useSettings} from '@/contexts/settings';
+import {Timer} from '@/features/timer';
+import {Player} from '@/features/youtube-player';
 
 const MainPage = () => {
   const {state, dispatch} = useSettings();
@@ -11,7 +11,7 @@ const MainPage = () => {
 
   const isLongBreak = !(state.round % state.longBreakInterval);
 
-  const onPlayerReady = (isReady: boolean) => setIsPlayerReady(isReady);
+  const onPlayerReady = () => setIsPlayerReady(true);
   const onSetMode = (mode: TimerMode) => dispatch('setMode', {mode});
   const onIncrementRound = () => dispatch('incrementRound');
 
@@ -30,7 +30,7 @@ const MainPage = () => {
       <PageContainer>
         <div className="flex items-center justify-center h-full">
           <div className="">
-            <div className="">
+            <div className="mb-6">
               <Player videoId={state.videoId} onReady={onPlayerReady} />
             </div>
 
@@ -45,15 +45,15 @@ const MainPage = () => {
             />
 
             <div className="flex justify-center items-center space-x-4 mt-6">
-              <div className="rounded-full font-semibold leading-none w-10 h-10 flex items-center justify-center border-4 border-accent-500 text-accent-500 dark:border-light">
+              <div className="rounded-full font-semibold leading-none w-8 h-8 flex items-center justify-center bg-accent-300  text-dark dark:text-light border-2 border-dark text-accent-500 dark:border-light">
                 {state.round}
               </div>
 
-              <button className="rounded-full w-10 h-10 flex items-center justify-center border-4 focus:border-accent-700 focus:text-accent-700 hover:text-accent-700 outline-none  hover:border-accent-700  border-accent-500 text-accent-500 dark:border-light transition-colors ease-in duration-100">
+              <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 hover:text-accent-700 outline-none  hover:border-accent-700  border-accent-500 text-accent-500 dark:border-light transition-colors ease-in duration-100">
                 <TbUser size={20} />
               </button>
 
-              <button className="rounded-full w-10 h-10 flex items-center justify-center border-4 focus:border-accent-700 focus:text-accent-700 hover:text-accent-700 outline-none  hover:border-accent-700  border-accent-500 text-accent-500 dark:border-light transition-colors ease-in duration-100">
+              <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 hover:text-accent-700 outline-none  hover:border-accent-700  border-accent-500 text-accent-500 dark:border-light transition-colors ease-in duration-100">
                 <TbAdjustmentsHorizontal size={20} />
               </button>
             </div>

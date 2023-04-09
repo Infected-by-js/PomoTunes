@@ -5,16 +5,16 @@ import {
   TbPlayerPlayFilled,
   TbPlayerTrackNextFilled,
 } from 'react-icons/tb';
-import {useTimer} from '@/hooks/useTimer';
-import {SOUNDS} from '@/shared/constants';
-import {ConfirmMessage} from '@/shared/enums';
-import {updateTitle} from '@/shared/helpers';
+import {ProgressLinear} from '@/shared/components';
 import {AudioPlayer} from '@/shared/lib/audio-player';
 import eventBus from '@/shared/lib/event-bus';
-import ButtonTimer from './ButtonTimer';
-import Clock from './Clock';
-import ModeSwitch from './ModeSwitch';
-import ProgressLinear from './ProgressLinear';
+import {SOUNDS} from '@/shared/utils/constants';
+import {ConfirmMessage} from '@/shared/utils/enums';
+import {updateTitle} from '@/shared/utils/helpers';
+import Button from './components/Button';
+import Clock from './components/Clock';
+import ModeSwitch from './components/ModeSwitch';
+import {useTimer} from './hooks/useTimer';
 
 interface Props {
   minutes: number;
@@ -99,7 +99,7 @@ const Timer: FC<Props> = ({
       <Clock seconds={timeLeft} />
 
       <div className="mt-8  grid grid-cols-3  gap-3 grid-rows-2 content-center justify-items-center">
-        <ButtonTimer
+        <Button
           onClick={toggleTimer}
           className={clsx(
             'w-[144px] h-[144px] bg-accent-500 rounded-[32px] row-span-2 col-span-2',
@@ -107,13 +107,13 @@ const Timer: FC<Props> = ({
           )}
         >
           {isTicking ? <TbPlayerPauseFilled size={32} /> : <TbPlayerPlayFilled size={32} />}
-        </ButtonTimer>
+        </Button>
 
         <ModeSwitch mode={mode} setMode={confirmSetMode} />
 
-        <ButtonTimer onClick={confirmNext} className="col-start-3">
+        <Button onClick={confirmNext} className="col-start-3">
           <TbPlayerTrackNextFilled size={20} />
-        </ButtonTimer>
+        </Button>
       </div>
     </div>
   );

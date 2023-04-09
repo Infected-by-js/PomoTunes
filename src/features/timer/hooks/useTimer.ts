@@ -7,6 +7,7 @@ interface Props {
   onReset?: () => void;
   onComplete?: () => void;
 }
+
 export const useTimer = ({minutes, onStart, onReset, onPause, onComplete}: Props) => {
   const time = minutes * 60;
   const timerId = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -57,15 +58,15 @@ export const useTimer = ({minutes, onStart, onReset, onPause, onComplete}: Props
 
   const withConfirm = useCallback(
     ({msg = 'Are you sure?', action}: {msg?: string; action: () => void}) => {
-      let allowed = true;
+      let isAllowed = true;
 
       if (isTicking) {
-        // pause();
-        allowed = confirm(msg);
+        pause();
+        isAllowed = confirm(msg);
         start();
       }
 
-      if (allowed) {
+      if (isAllowed) {
         reset();
         action();
       }
