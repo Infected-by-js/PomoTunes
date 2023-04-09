@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {TbAdjustmentsHorizontal, TbUser} from 'react-icons/tb';
 import {PageContainer} from '@/shared/components';
+import {Notifications} from '@/shared/lib/notifications';
 import {useSettings} from '@/contexts/settings';
 import {Timer} from '@/features/timer';
 import {Player} from '@/features/youtube-player';
@@ -15,9 +16,21 @@ const MainPage = () => {
   const onSetMode = (mode: TimerMode) => dispatch('setMode', {mode});
   const onIncrementRound = () => dispatch('incrementRound');
 
+  const notificationService = Notifications();
+
+  const showFocusNotification = async (title) => {
+    await notificationService.showNotification(title, {
+      icon: 'logo.svg',
+      body: 'BODY TEXT',
+    });
+  };
+
+  setTimeout(() => showFocusNotification('Time to focus!'), 2000);
+  setTimeout(() => showFocusNotification('Time for a break'), 2000);
+
   return (
     <>
-      {!isPlayerReady && (
+      {/* {!isPlayerReady && (
         <div className="fixed inset-0 bg-accent-100  flex justify-center items-center z-50">
           <div
             className="animate-spin inline-block w-10 h-10 border-[3px] border-current border-t-transparent text-accent-500 rounded-full"
@@ -25,13 +38,13 @@ const MainPage = () => {
             aria-label="loading"
           />
         </div>
-      )}
+      )} */}
 
       <PageContainer>
         <div className="flex items-center justify-center h-full">
           <div className="">
             <div className="mb-6">
-              <Player videoId={state.videoId} onReady={onPlayerReady} />
+              {/* <Player videoId={state.videoId} onReady={onPlayerReady} /> */}
             </div>
 
             <Timer

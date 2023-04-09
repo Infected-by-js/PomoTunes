@@ -6,7 +6,7 @@ export const initialState: State = {
   isAutoBreaks: true,
   isAutoFocus: true,
   longBreakInterval: 4,
-  isDarkTheme: false,
+  isDarkTheme: true,
   round: 1,
 
   modes: {
