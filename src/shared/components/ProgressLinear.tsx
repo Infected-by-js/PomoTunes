@@ -16,7 +16,7 @@ const ProgressLinear: FC<ProgressProps> = ({
     <div className={clsx('relative w-full  h-2', `bg-${placeholderColorClass}`)}>
       <div
         className={clsx(
-          'absolute left-0 top-0 h-2 rounded-r-full  transition-all duration-300 ease-in-out',
+          'absolute left-0 top-0 h-2 rounded-r-full  transition-all duration-400 ease-in',
           `bg-${progressColorClass}`
         )}
         style={{width: `${progress}%`}}
