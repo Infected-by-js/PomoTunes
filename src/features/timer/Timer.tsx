@@ -8,6 +8,7 @@ import {
 import {ProgressLinear} from '@/shared/components';
 import {AudioPlayer} from '@/shared/lib/audio-player';
 import eventBus from '@/shared/lib/event-bus';
+import {Notifications} from '@/shared/lib/notifications';
 import {SOUNDS} from '@/shared/utils/constants';
 import {ConfirmMessage} from '@/shared/utils/enums';
 import {updateTitle} from '@/shared/utils/helpers';
@@ -31,6 +32,8 @@ const buttonAudio = new AudioPlayer({src: SOUNDS.BUTTON_PRESS});
 const breakAudio = new AudioPlayer({src: SOUNDS.BELL});
 const focusAudio = new AudioPlayer({src: SOUNDS.CLOCK_ALARM});
 
+const notifications = Notifications();
+
 const Timer: FC<Props> = ({
   minutes,
   mode,
@@ -47,6 +50,10 @@ const Timer: FC<Props> = ({
     onComplete: () => {
       if (mode === 'focus') breakAudio.play();
       else focusAudio.play();
+
+      notifications.showNotification(
+        mode === 'focus' ? 'Time for a break!' : 'Time to focus!'
+      );
 
       nextMode();
     },
