@@ -13,13 +13,10 @@ module.exports = {
     '^@react(.*)$',
     '<THIRD_PARTY_MODULES>',
 
-    '^@/core(.*)$',
-    '^@/api(.*)$',
-    '^@/services(.*)$',
-    '^@/hooks(.*)$',
+    '^@/contexts(.*)$',
+    '^@/pages(.*)$',
+    '^@/features(.*)$',
     '^@/shared(.*)$',
-    '^@/types(.*)$',
-    '^@/components(.*)$',
 
     '^../(.*)$',
     '^./(.*)$',
