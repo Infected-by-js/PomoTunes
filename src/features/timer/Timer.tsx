@@ -9,7 +9,7 @@ import {ProgressLinear} from '@/shared/components';
 import {AudioPlayer} from '@/shared/lib/audio-player';
 import eventBus from '@/shared/lib/event-bus';
 import {Notifications} from '@/shared/lib/notifications';
-import {SOUNDS} from '@/shared/utils/constants';
+import {IMAGES, SOUNDS} from '@/shared/utils/constants';
 import {ConfirmMessage} from '@/shared/utils/enums';
 import {updateTitle} from '@/shared/utils/helpers';
 import Button from './components/Button';
@@ -52,7 +52,8 @@ const Timer: FC<Props> = ({
       else focusAudio.play();
 
       notifications.showNotification(
-        mode === 'focus' ? 'Time for a break!' : 'Time to focus!'
+        mode === 'focus' ? 'Time for a break!' : 'Time to focus!',
+        {icon: IMAGES.NOTIFICATION}
       );
 
       nextMode();

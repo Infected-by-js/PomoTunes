@@ -4,3 +4,7 @@ export const SOUNDS = {
   NOTIFICATION: 'sounds/notification.mp3',
   CLOCK_ALARM: 'sounds/clock-alarm.mp3',
 };
+
+export const IMAGES = {
+  NOTIFICATION: 'notification.png'
+}
