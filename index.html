@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PomoTunes</title>
     <meta name="theme-color" content="#fff" />
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('./notifications-worker.js')
+          .then(() => console.log('Notification service worker registered.'))
+          .catch(() => console.error('Notification service worker registration failed.'));
+      } else {
+        console.warn('It appears that your browser is not compatible with notifications.');
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
