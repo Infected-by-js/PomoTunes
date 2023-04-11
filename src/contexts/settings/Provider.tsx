@@ -1,5 +1,5 @@
 import {FC, PropsWithChildren, createContext, useEffect, useReducer} from 'react';
-import {updateTheme} from '@/shared/helpers';
+import {updateTheme} from '@/shared/utils/helpers';
 import {initialState} from './initialState';
 import {reducer} from './reducer';
 import {Action, Dispatch, State} from './types';

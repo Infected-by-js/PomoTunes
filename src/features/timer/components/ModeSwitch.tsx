@@ -1,8 +1,8 @@
 import {FC, useRef} from 'react';
 import Popup from 'reactjs-popup';
 import {PopupActions} from 'reactjs-popup/dist/types';
-import {MODE_ICON} from '../shared/constants';
-import ButtonTimer from './ButtonTimer';
+import {MODE_ICON} from '../utils/constants';
+import Button from './Button';
 import ModeSwitchList from './ModeSwitchList';
 
 interface Props {
@@ -28,9 +28,9 @@ const ModeSwitch: FC<Props> = ({mode, setMode}) => {
         ref={ref}
         closeOnDocumentClick
         trigger={
-          <ButtonTimer>
+          <Button>
             <Icon size={24} />
-          </ButtonTimer>
+          </Button>
         }
         closeOnEscape={true}
         position="right top"

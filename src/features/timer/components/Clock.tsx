@@ -1,5 +1,5 @@
 import {FC} from 'react';
-import {secondsToMinutes} from '@/shared/utils';
+import {secondsToMinutes} from '@/shared/utils/time-utils';
 
 interface Props {
   seconds: number;
@@ -11,7 +11,7 @@ const Clock: FC<Props> = ({seconds}) => {
   return (
     <div
       className={
-        'text-[180px] leading-[85%] flex flex-col items-center font-normal text-dark dark:text-light pointer-events-none'
+        'text-[164px] leading-[85%] flex flex-col items-center font-normal text-dark dark:text-light pointer-events-none'
       }
     >
       <span>{mm}</span>

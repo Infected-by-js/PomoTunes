@@ -1,7 +1,5 @@
 const padZero = (v: number) => String(v).padStart(2, '0');
 
-export const capitalize = ([first, ...rest]: string) => first.toUpperCase() + rest.join('');
-
 export const secondsToTime = (sec: number) => {
   const SEC_IN_HOUR = 3600;
   const hours = Math.floor(Math.round(sec) / SEC_IN_HOUR);

@@ -1,4 +1,4 @@
-import {secondsToTime} from './utils';
+import {secondsToTime} from './time-utils';
 
 export const updateTitle = (seconds: number, mode: TimerMode) => {
   const {mm, ss} = secondsToTime(seconds);
