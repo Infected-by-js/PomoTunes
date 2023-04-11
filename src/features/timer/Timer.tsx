@@ -110,8 +110,8 @@ const Timer: FC<Props> = ({
         <Button
           onClick={toggleTimer}
           className={clsx(
-            'w-[144px] h-[144px] bg-accent-500 rounded-[32px] row-span-2 col-span-2',
-            isTicking ? 'border-4 border-dark' : ''
+            'w-32 h-32 bg-accent-500 rounded-3xl row-span-2 col-span-2',
+            isTicking ? 'border-4 border-dark dark:border-light' : ''
           )}
         >
           {isTicking ? <TbPlayerPauseFilled size={32} /> : <TbPlayerPlayFilled size={32} />}
@@ -119,7 +119,7 @@ const Timer: FC<Props> = ({
 
         <ModeSwitch mode={mode} setMode={confirmSetMode} />
 
-        <Button onClick={confirmNext} className="col-start-3">
+        <Button onClick={confirmNext} className="w-14 h-14 rounded-xl col-start-3">
           <TbPlayerTrackNextFilled size={20} />
         </Button>
       </div>

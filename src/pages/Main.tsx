@@ -49,16 +49,16 @@ const MainPage = () => {
               onIncrementRound={onIncrementRound}
             />
 
-            <div className="flex justify-center items-center space-x-4 mt-6">
-              <div className="rounded-full font-semibold leading-none w-8 h-8 flex items-center justify-center bg-accent-300  text-dark dark:text-light border-2 border-dark text-accent-500 dark:border-light">
+            <div className="flex justify-center items-center space-x-4 mt-4">
+              <div className="rounded-full font-semibold leading-none w-8 h-8 flex items-center justify-center bg-accent-300  text-dark border-2 border-dark text-accent-500  dark:bg-accent-700">
                 {state.round}
               </div>
 
-              <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 hover:text-accent-700 outline-none  hover:border-accent-700  border-accent-500 text-accent-500 dark:border-light transition-colors ease-in duration-100">
+              <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 focus:dark:text-accent-300 focus:dark:border-accent-300 outline-none dark:bg-accent-700 hover:text-accent-700   hover:border-accent-700 hover:dark:text-accent-500 hover:dark:border-accent-500  border-accent-500 text-accent-500  transition-colors ease-in duration-100">
                 <TbUser size={20} />
               </button>
 
-              <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 hover:text-accent-700 outline-none  hover:border-accent-700  border-accent-500 text-accent-500 dark:border-light transition-colors ease-in duration-100">
+              <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 focus:dark:text-accent-300 focus:dark:border-accent-300 outline-none dark:bg-accent-700 hover:text-accent-700   hover:border-accent-700 hover:dark:text-accent-500 hover:dark:border-accent-500  border-accent-500 text-accent-500  transition-colors ease-in duration-100">
                 <TbAdjustmentsHorizontal size={20} />
               </button>
             </div>
