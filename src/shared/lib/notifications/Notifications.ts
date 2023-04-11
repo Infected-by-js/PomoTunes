@@ -1,19 +1,20 @@
 export class NotificationService {
   private static instance: NotificationService;
   private isPermissionGranted: boolean;
+  private notifications: Notification[];
 
   constructor() {
     this.isPermissionGranted = false;
+    this.notifications = [];
 
     document.addEventListener('visibilitychange', this.clearPageVisibleNotifications);
   }
 
   private clearPageVisibleNotifications = async () => {
     if (document.visibilityState === 'visible') {
-      const register = await navigator.serviceWorker.ready;
-      const notifications = await register.getNotifications();
+      this.notifications.forEach((notification) => notification.close());
 
-      notifications.forEach((notification) => notification.close());
+      this.notifications = [];
     }
   };
 
@@ -41,10 +42,20 @@ export class NotificationService {
 
     if (!this.isPermissionGranted) return;
 
-    if (document.visibilityState !== 'visible') {
-      const registration = await navigator.serviceWorker.ready;
+    if (document.visibilityState === 'hidden') {
+      const notification = new Notification(title, options);
 
-      registration.showNotification(title, options);
+      notification.onclick = () => {
+        window.focus();
+        notification.close();
+      };
+
+      notification.onclose = () => {
+        notification.onclick = null;
+        notification.onclose = null;
+      };
+
+      this.notifications.push(notification);
     }
   }
 }
