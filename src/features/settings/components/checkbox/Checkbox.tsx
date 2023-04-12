@@ -14,7 +14,6 @@ const Checkbox: FC<Props> = ({value, onChange, isDisabled = false}) => {
   const handleInputChange = (e) => {
     const newValue = e.target.checked;
     setIsChecked(newValue);
-    console.log(newValue);
     onChange(newValue);
   };
 

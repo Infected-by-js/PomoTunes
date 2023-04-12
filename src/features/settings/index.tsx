@@ -2,7 +2,7 @@ import {FC} from 'react';
 import {TbX} from 'react-icons/tb';
 import Popup from 'reactjs-popup';
 import {useSettings} from '@/contexts/settings';
-import {Checkbox} from '@/shared/components';
+import {Checkbox, Slider} from './components';
 
 interface Props {
   trigger?: JSX.Element;
@@ -16,22 +16,77 @@ const Settings: FC<Props> = ({trigger}) => {
 
   return (
     <Popup trigger={trigger} {...{contentStyle, overlayStyle}} modal>
-      <div className="rounded-lg bg-accent-100 text-center shadow-xl min-w-[350px]">
+      <div className="rounded-lg bg-accent-100 text-center shadow-xl min-w-[300px]">
         <div className="px-6 py-5">
           <div className="flex justify-between items-center">
-            <p className="font-bold">Settings</p>
+            <p className="font-bold text-lg">Settings</p>
             <button className="rounded-full w-8 h-8 flex items-center justify-center  text-dark hover:text-accent-700 outline-none transition-colors ease-in duration-100">
-              <TbX size={16} />
+              <TbX size={20} />
             </button>
           </div>
 
-          <hr className="h-px mt-2 bg-accent-300 border-0 dark:bg-gray-700"></hr>
-
-          <div className="mt-4 flex justify-between items-center">
-            <p className="text-sm">Dark mode</p>
+          <div className="mt-8 flex justify-between items-center">
+            <p className="text-md">Dark mode</p>
             <Checkbox
               value={state.isDarkTheme}
               onChange={() => dispatch('toggleDarkTheme')}
+              isDisabled={false}
+            />
+          </div>
+
+          <div className="inline-flex items-center justify-center w-full">
+            <hr className="w-64 h-px my-6 border-0 bg-accent-300" />
+            <span className="absolute px-3 font-light text-sm -translate-x-1/2 left-1/2 text-dark bg-accent-100">
+              Time
+            </span>
+          </div>
+
+          <div>
+            <Slider
+              label="Focus"
+              color={state.modes.focus.color}
+              value={state.modes.focus.time}
+              onChange={(v) => console.log('Change focus', v)}
+            />
+          </div>
+
+          <div className="mt-6">
+            <Slider
+              label="Short break"
+              color={state.modes.short_break.color}
+              value={state.modes.short_break.time}
+              onChange={(v) => console.log('Change short', v)}
+            />
+          </div>
+          <div className="mt-6">
+            <Slider
+              label="Long break"
+              color={state.modes.long_break.color}
+              value={state.modes.long_break.time}
+              onChange={(v) => console.log('Change long', v)}
+            />
+          </div>
+
+          <div className="mt-2 inline-flex items-center justify-center w-full">
+            <hr className="w-64 h-px my-6 border-0 bg-accent-300" />
+            <span className="absolute px-3 font-light text-sm -translate-x-1/2 left-1/2 text-dark bg-accent-100">
+              Auto start
+            </span>
+          </div>
+
+          <div className="flex justify-between items-center">
+            <p className="text-md">Auto Breaks</p>
+            <Checkbox
+              value={state.isAutoBreaks}
+              onChange={() => dispatch('toggleAutoBreaks')}
+              isDisabled={false}
+            />
+          </div>
+          <div className="mt-6 flex justify-between items-center">
+            <p className="text-md">Auto Pomodoros</p>
+            <Checkbox
+              value={state.isAutoFocus}
+              onChange={() => dispatch('toggleAutoStarts')}
               isDisabled={false}
             />
           </div>

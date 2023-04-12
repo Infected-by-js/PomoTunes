@@ -2,6 +2,7 @@ export interface ModeSettings {
   id: TimerMode;
   label: string;
   time: number;
+  color: string
 }
 export interface State {
   videoId: string;
