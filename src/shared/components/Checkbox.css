@@ -1,0 +1,54 @@
+.checkbox {
+  position: relative;
+  display: flex;
+  width: 40px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2) inset;
+}
+
+.checkbox input {
+  height: 0;
+  width: 0;
+  position: absolute;
+}
+
+.checkbox .checkmark {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  background-color: white;
+  border-radius: 10px;
+  transform: translate(2px, 1px);
+  transition: all 0.2s ease-in-out;
+  position: relative;
+}
+
+.checkbox.checked {
+  background-color: var(--color-accent-500);
+  border-color: var(--color-accent-500);
+}
+
+.checkbox.disabled {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.checkbox.disabled .checkmark {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.checkbox:focus-within {
+  border-color: var(--color-accent-500);
+}
+
+.checkbox input:checked + .checkmark {
+  transform: translate(20px, 1px);
+}
