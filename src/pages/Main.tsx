@@ -1,12 +1,13 @@
 import {useEffect, useState} from 'react';
 import {TbAdjustmentsHorizontal, TbUser} from 'react-icons/tb';
 import {useSettings} from '@/contexts/settings';
-import Settings from '@/features/settings';
+import {Settings} from '@/features/settings';
 import {Timer} from '@/features/timer';
 import {Player} from '@/features/youtube-player';
 import {PageContainer} from '@/shared/components';
 import {Notifications} from '@/shared/lib/notifications';
 
+// TODO: remove flickering page before styles loaded
 const MainPage = () => {
   const {state, dispatch} = useSettings();
   const [isPlayerReady, setIsPlayerReady] = useState(false);
