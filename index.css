@@ -90,6 +90,27 @@
     transform: translate(20px, 1px);
   }
 
+  .input {
+    padding: 10px;
+    text-align: center;
+    color: var(--color-accent-900);
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid transparent;
+    border-radius: 3px;
+    outline: 0;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .input:focus,
+  .input:active {
+    background: transparent;
+    border-color: var(--color-accent-500);
+  }
+
+  .input:focus::placeholder,
+  .input:active::placeholder {
+    color: #aaa;
+  }
 
   .slider {
     width: 100%;
