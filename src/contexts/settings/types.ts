@@ -2,7 +2,7 @@ export interface ModeSettings {
   id: TimerMode;
   label: string;
   time: number;
-  color: string
+  color: string;
 }
 export interface State {
   videoId: string;
@@ -21,10 +21,11 @@ export interface State {
 export type Action =
   | {type: 'setMode'; payload: {mode: TimerMode}}
   | {type: 'updateModeTime'; payload: {mode: TimerMode; time: number}}
+  | {type: 'setLongBreakInterval'; payload: {interval: number}}
+  | {type: 'changeVideoId'; payload: {id: string}}
   | {type: 'toggleAutoBreaks'; payload: null}
   | {type: 'toggleAutoStarts'; payload: null}
   | {type: 'toggleDarkTheme'; payload: null}
-  | {type: 'setLongBreakInterval'; payload: {longBreakInterval: number}}
   | {type: 'incrementRound'; payload: null};
 
 export type Dispatch = <T extends Action['type']>(

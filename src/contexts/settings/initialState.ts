@@ -13,19 +13,19 @@ export const initialState: State = {
     focus: {
       id: 'focus',
       label: 'Focus',
-      time: 0.1,
+      time: 25,
       color: '#ff7c7c',
     },
     short_break: {
       id: 'short_break',
       label: 'Short break',
-      time: 0.05,
+      time: 5,
       color: '#a1c0b6',
     },
     long_break: {
       id: 'long_break',
       label: 'Long break',
-      time: 0.15,
+      time: 15,
       color: '#b6b6c8',
     },
   },
