@@ -10,7 +10,6 @@ import {AudioPlayer} from '@/shared/lib/audio-player';
 import eventBus from '@/shared/lib/event-bus';
 import {Notifications} from '@/shared/lib/notifications';
 import {IMAGES, SOUNDS} from '@/shared/utils/constants';
-import {ConfirmMessage} from '@/shared/utils/enums';
 import {updateTitle} from '@/shared/utils/helpers';
 import Button from './components/Button';
 import Clock from './components/Clock';
@@ -29,8 +28,8 @@ interface Props {
 
 //* set here to avoid refetch audio
 const buttonAudio = new AudioPlayer({src: SOUNDS.BUTTON_PRESS});
-const breakAudio = new AudioPlayer({src: SOUNDS.BELL});
-const focusAudio = new AudioPlayer({src: SOUNDS.CLOCK_ALARM});
+const breakAudio = new AudioPlayer({src: SOUNDS.SOUND_1});
+const focusAudio = new AudioPlayer({src: SOUNDS.BELL});
 
 const notifications = Notifications();
 
@@ -43,8 +42,9 @@ const Timer: FC<Props> = ({
   isAutoBreaks,
   isAutoFocus,
 }) => {
-  const {progress, start, pause, reset, timeLeft, isTicking, withConfirm} = useTimer({
+  const {timerState, toggle, start} = useTimer({
     minutes,
+    mode,
     onPause: () => eventBus.pauseTimer.emit(),
     onStart: () => eventBus.startTimer.emit(),
     onComplete: () => {
@@ -60,66 +60,65 @@ const Timer: FC<Props> = ({
     },
   });
 
-  const setMode = (newMode: TimerMode) => {
-    if (newMode === 'focus') eventBus.focusStart.emit();
-    else eventBus.focusEnd.emit();
-
-    reset();
-    onSetMode(newMode);
+  const nextMode = () => {
+    if (mode === 'focus') setMode(isLongBreak ? 'long_break' : 'short_break');
+    else setMode('focus');
   };
 
-  const nextMode = () => {
-    if (mode === 'focus') {
-      setMode(isLongBreak ? 'long_break' : 'short_break');
-      if (isAutoBreaks) start();
+  const setMode = (newMode: TimerMode) => {
+    onSetMode(newMode);
+
+    if (newMode === 'focus') {
+      eventBus.focusStart.emit();
+
+      onIncrementRound();
+      if (isAutoFocus) start();
       return;
     }
 
-    setMode('focus');
-    onIncrementRound();
-    if (isAutoFocus) start();
-  };
-
-  const confirmNext = () => withConfirm({msg: ConfirmMessage.Next, action: nextMode});
-  const confirmSetMode = (mode: TimerMode) => {
-    withConfirm({msg: ConfirmMessage.Jump, action: () => setMode(mode)});
+    eventBus.focusEnd.emit();
+    if (isAutoBreaks) start();
   };
 
   useEffect(() => {
-    updateTitle(timeLeft, mode);
-  }, [mode, timeLeft]);
+    updateTitle(timerState.timeLeft, mode);
+  }, [mode, timerState.timeLeft]);
 
   const toggleTimer = () => {
     buttonAudio.play();
-    isTicking ? pause() : start();
+    toggle();
   };
 
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="fixed top-0 left-0 right-0">
         <ProgressLinear
-          progress={progress}
+          progress={timerState.progress}
           placeholderColorClass="accent-300"
           progressColorClass="accent-500"
         />
       </div>
 
-      <Clock seconds={timeLeft} />
+      <Clock seconds={timerState.timeLeft} />
 
       <div className="mt-8  grid grid-cols-3  gap-3 grid-rows-2 content-center justify-items-center">
         <Button
           onClick={toggleTimer}
           className={clsx(
             'w-32 h-32 bg-accent-500 rounded-3xl row-span-2 col-span-2',
-            isTicking ? 'border-4 border-dark dark:border-light' : ''
+            timerState.isTicking ? 'border-4 border-dark dark:border-light' : ''
           )}
         >
-          {isTicking ? <TbPlayerPauseFilled size={32} /> : <TbPlayerPlayFilled size={32} />}
+          {timerState.isTicking ? (
+            <TbPlayerPauseFilled size={32} />
+          ) : (
+            <TbPlayerPlayFilled size={32} />
+          )}
         </Button>
 
-        <ModeSwitch mode={mode} setMode={confirmSetMode} />
+        <ModeSwitch mode={mode} setMode={setMode} />
 
-        <Button onClick={confirmNext} className="w-14 h-14 rounded-xl col-start-3">
+        <Button onClick={nextMode} className="w-14 h-14 rounded-xl col-start-3">
           <TbPlayerTrackNextFilled size={20} />
         </Button>
       </div>
