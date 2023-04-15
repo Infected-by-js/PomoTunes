@@ -1,6 +1,8 @@
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
+import {useInterval} from './useInterval';
 
 interface Props {
+  mode: TimerMode;
   minutes: number;
   onStart?: () => void;
   onPause?: () => void;
@@ -8,31 +10,35 @@ interface Props {
   onComplete?: () => void;
 }
 
-export const useTimer = ({minutes, onStart, onReset, onPause, onComplete}: Props) => {
-  const time = minutes * 60;
-  const timerId = useRef<ReturnType<typeof setInterval> | null>(null);
-  const [timeLeft, setTimeLeft] = useState(time);
-  const [isTicking, setIsTicking] = useState(false);
-  const [progress, setProgress] = useState(0);
-
-  const clear = () => {
-    if (timerId.current) clearInterval(timerId.current);
-    timerId.current = null;
+interface UseTimer {
+  timerState: {
+    isTicking: boolean;
+    progress: number;
+    timeLeft: number;
   };
 
-  const tick = useCallback(() => {
-    if (timeLeft > 0) {
-      setTimeLeft((prev) => prev - 1);
-      setProgress((prev) => prev + 1);
+  start: () => void;
+  pause: () => void;
+  reset: () => void;
+  toggle: () => void;
+}
 
+export const useTimer = (props: Props): UseTimer => {
+  const {minutes, mode, onStart, onReset, onPause, onComplete} = props;
+  const baseTime = minutes * 60;
+
+  const [timeLeft, setTimeLeft] = useState(baseTime);
+  const [isTicking, setIsTicking] = useState(false);
+
+  useInterval(() => {
+    if (timeLeft > 1) {
+      setTimeLeft(timeLeft - 1);
       return;
     }
 
     setIsTicking(false);
-    clear();
-
     onComplete?.();
-  }, [onComplete, timeLeft]);
+  }, isTicking);
 
   const start = useCallback(() => {
     setIsTicking(true);
@@ -44,54 +50,31 @@ export const useTimer = ({minutes, onStart, onReset, onPause, onComplete}: Props
     onPause?.();
   }, [onPause, isTicking]);
 
-  const reset = useCallback(
-    (isInitialTime?: boolean) => {
-      setIsTicking(false);
-      setProgress(0);
+  const toggle = useCallback(() => {
+    if (isTicking) pause();
+    else start();
+  }, [isTicking]);
 
-      if (isInitialTime) setTimeLeft(time);
-
-      onReset?.();
-    },
-    [onReset, progress, time]
-  );
-
-  const withConfirm = useCallback(
-    ({msg = 'Are you sure?', action}: {msg?: string; action: () => void}) => {
-      let isAllowed = true;
-
-      if (isTicking) {
-        pause();
-        isAllowed = confirm(msg);
-        start();
-      }
-
-      if (isAllowed) {
-        reset();
-        action();
-      }
-    },
-    [start, pause, isTicking]
-  );
+  const reset = useCallback(() => {
+    setIsTicking(false);
+    setTimeLeft(baseTime);
+    onReset?.();
+  }, [onReset, baseTime]);
 
   useEffect(() => {
-    if (isTicking) timerId.current = setInterval(tick, 1000);
-    else clear();
-
-    return clear;
-  }, [tick, isTicking]);
-
-  useEffect(() => {
-    setTimeLeft(time);
-  }, [time]);
+    setTimeLeft(baseTime);
+  }, [baseTime, mode]);
 
   return {
+    timerState: {
+      timeLeft,
+      isTicking,
+      progress: (1 - timeLeft / baseTime) * 100,
+    },
+
     start,
     pause,
+    toggle,
     reset,
-    withConfirm,
-    isTicking,
-    timeLeft,
-    progress: (progress / time) * 100,
   };
 };

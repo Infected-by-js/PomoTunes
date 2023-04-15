@@ -15,7 +15,7 @@ const Player: FC<Props> = ({videoId, onReady}) => {
     <>
       <div
         className={
-          'w-[320px] h-[180px] relative shadow-xl flex justify-center items-center drop-shadow-lg rounded-2xl overflow-hidden'
+          'w-[265px] h-[149px] relative shadow-xl flex justify-center items-center drop-shadow-lg rounded-2xl overflow-hidden'
         }
       >
         {!isReady && (

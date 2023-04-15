@@ -11,3 +11,19 @@ export const updateTheme = (mode: TimerMode, isDarkTheme: boolean) => {
   document.documentElement.dataset.theme = mode;
   document.documentElement.dataset.mode = isDarkTheme ? 'dark' : 'light';
 };
+
+export const generateBackgroundGradient = ({
+  color,
+  min,
+  max,
+  value,
+}: {
+  color: string;
+  min: number;
+  max: number;
+  value: number;
+}) => {
+  const percentage = ((value - min) / (max - min)) * 100;
+
+  return `linear-gradient(to right, ${color} ${percentage}%, rgba(0, 0, 0, 0.1) ${percentage}%)`;
+};

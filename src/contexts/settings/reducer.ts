@@ -15,6 +15,21 @@ export const reducer = produce((state: State, action: Action): State => {
       break;
     }
 
+    case 'setLongBreakInterval': {
+      state.longBreakInterval = payload.interval;
+      break;
+    }
+
+    case 'changeVideoId': {
+      state.videoId = payload.id;
+      break;
+    }
+
+    case 'incrementRound': {
+      state.round += 1;
+      break;
+    }
+
     case 'toggleAutoBreaks': {
       state.isAutoBreaks = !state.isAutoBreaks;
       break;
@@ -27,16 +42,6 @@ export const reducer = produce((state: State, action: Action): State => {
 
     case 'toggleDarkTheme': {
       state.isDarkTheme = !state.isDarkTheme;
-      break;
-    }
-
-    case 'setLongBreakInterval': {
-      state.longBreakInterval = payload.longBreakInterval;
-      break;
-    }
-
-    case 'incrementRound': {
-      state.round += 1;
       break;
     }
   }

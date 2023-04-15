@@ -28,7 +28,7 @@ const ModeSwitch: FC<Props> = ({mode, setMode}) => {
         ref={ref}
         closeOnDocumentClick
         trigger={
-          <Button>
+          <Button className="w-14 h-14 rounded-xl">
             <Icon size={24} />
           </Button>
         }
@@ -37,7 +37,7 @@ const ModeSwitch: FC<Props> = ({mode, setMode}) => {
         arrow={false}
         offsetX={20}
       >
-        <div className="bg-accent-100 dark:bg-accent-900 drop-shadow-lg rounded-lg overflow-hidden">
+        <div className="bg-accent-100 dark:bg-accent-700 drop-shadow-lg rounded-lg overflow-hidden">
           <ModeSwitchList selectMode={selectMode} mode={mode} />
         </div>
       </Popup>

@@ -1,11 +1,13 @@
 import {useEffect, useState} from 'react';
 import {TbAdjustmentsHorizontal, TbUser} from 'react-icons/tb';
 import {useSettings} from '@/contexts/settings';
+import {Settings} from '@/features/settings';
 import {Timer} from '@/features/timer';
 import {Player} from '@/features/youtube-player';
-import {PageContainer} from '@/shared/components';
+import {GitHubCorner, PageContainer} from '@/shared/components';
 import {Notifications} from '@/shared/lib/notifications';
 
+// TODO: remove flickering page before styles loaded
 const MainPage = () => {
   const {state, dispatch} = useSettings();
   const [isPlayerReady, setIsPlayerReady] = useState(false);
@@ -32,6 +34,8 @@ const MainPage = () => {
         </div>
       )}
 
+      <GitHubCorner />
+
       <PageContainer>
         <div className="flex items-center justify-center h-full">
           <div className="">
@@ -49,18 +53,22 @@ const MainPage = () => {
               onIncrementRound={onIncrementRound}
             />
 
-            <div className="flex justify-center items-center space-x-4 mt-6">
-              <div className="rounded-full font-semibold leading-none w-8 h-8 flex items-center justify-center bg-accent-300  text-dark dark:text-light border-2 border-dark text-accent-500 dark:border-light">
+            <div className="flex justify-center items-center space-x-4 mt-4">
+              <div className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 focus:dark:text-accent-300 focus:dark:border-accent-300 outline-none dark:bg-accent-700 hover:text-accent-700   hover:border-accent-700 hover:dark:text-accent-500 hover:dark:border-accent-500  border-accent-500 text-accent-500  transition-colors ease-in duration-100">
                 {state.round}
               </div>
 
-              <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 hover:text-accent-700 outline-none  hover:border-accent-700  border-accent-500 text-accent-500 dark:border-light transition-colors ease-in duration-100">
+              <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 focus:dark:text-accent-300 focus:dark:border-accent-300 outline-none dark:bg-accent-700 hover:text-accent-700   hover:border-accent-700 hover:dark:text-accent-500 hover:dark:border-accent-500  border-accent-500 text-accent-500  transition-colors ease-in duration-100">
                 <TbUser size={20} />
               </button>
 
-              <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 hover:text-accent-700 outline-none  hover:border-accent-700  border-accent-500 text-accent-500 dark:border-light transition-colors ease-in duration-100">
-                <TbAdjustmentsHorizontal size={20} />
-              </button>
+              <Settings
+                trigger={
+                  <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 focus:dark:text-accent-300 focus:dark:border-accent-300 outline-none dark:bg-accent-700 hover:text-accent-700   hover:border-accent-700 hover:dark:text-accent-500 hover:dark:border-accent-500  border-accent-500 text-accent-500  transition-colors ease-in duration-100">
+                    <TbAdjustmentsHorizontal size={20} />
+                  </button>
+                }
+              />
             </div>
           </div>
         </div>
