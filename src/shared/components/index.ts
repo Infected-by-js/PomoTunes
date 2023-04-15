@@ -6,3 +6,4 @@ export {default as Checkbox} from './Checkbox';
 export {default as Input} from './Input';
 export {default as Slider} from './Slider';
 export {default as SliderWithLabel} from './SliderWithLabel';
+export {default as GitHubCorner} from './GitHubCorner';

@@ -4,7 +4,7 @@ import {useSettings} from '@/contexts/settings';
 import {Settings} from '@/features/settings';
 import {Timer} from '@/features/timer';
 import {Player} from '@/features/youtube-player';
-import {PageContainer} from '@/shared/components';
+import {GitHubCorner, PageContainer} from '@/shared/components';
 import {Notifications} from '@/shared/lib/notifications';
 
 // TODO: remove flickering page before styles loaded
@@ -33,6 +33,8 @@ const MainPage = () => {
           />
         </div>
       )}
+
+      <GitHubCorner />
 
       <PageContainer>
         <div className="flex items-center justify-center h-full">
