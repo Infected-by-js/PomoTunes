@@ -1,4 +1,4 @@
-import {State} from './types';
+import {State} from '../model/types';
 
 export const initialState: State = {
   mode: 'focus',
