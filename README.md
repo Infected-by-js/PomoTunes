@@ -2,6 +2,8 @@
 
 PomoTunes is a productivity app that combines the Pomodoro technique with music streaming from YouTube. 🎧📈 With PomoTunes, you can stay focused and productive while enjoying your favorite music. 🎶💻
 
+ <img src="./pomotunes-preview.jpg" width="100%">
+
 ## Features
 
 1.  🕰️👨‍💻 Pomodoro timer: Set your work intervals and break intervals with ease.

@@ -1,8 +1,7 @@
-import {FC, PropsWithChildren, createContext, useEffect, useReducer} from 'react';
+import {FC, PropsWithChildren, createContext, useEffect} from 'react';
 import {updateTheme} from '@/shared/utils/helpers';
-import {initialState} from './initialState';
-import {reducer} from './reducer';
-import {Action, Dispatch, State} from './types';
+import {useSettingsReducer} from './hooks/useSettingsReducer';
+import {Dispatch, State} from './model/types';
 
 interface Context {
   state: State;
@@ -12,21 +11,13 @@ interface Context {
 export const SettingsContext = createContext<Context>({} as Context);
 
 export const SettingsProvider: FC<PropsWithChildren> = ({children}) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const handleDispatch: Dispatch = (type, payload) => {
-    dispatch({type, payload} as Action);
-  };
+  const [state, dispatch] = useSettingsReducer();
 
   useEffect(() => {
-    // TODO: GET FROM LS
-    // TODO: SET TO LS
     updateTheme(state.mode, state.isDarkTheme);
   }, [state.mode, state.isDarkTheme]);
 
   return (
-    <SettingsContext.Provider value={{state, dispatch: handleDispatch}}>
-      {children}
-    </SettingsContext.Provider>
+    <SettingsContext.Provider value={{state, dispatch}}>{children}</SettingsContext.Provider>
   );
 };
