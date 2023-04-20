@@ -26,8 +26,9 @@ const SliderWithLabel: FC<Props> = (props) => {
 
   const updateSlider = (e: ChangeEvent<HTMLInputElement>) => {
     setRange(Number(e.target.value));
-    onChange(Number(e.target.value));
   };
+
+  const submitChanges = () => onChange(range);
 
   return (
     <div className="flex items-center flex-col w-full">
@@ -51,6 +52,7 @@ const SliderWithLabel: FC<Props> = (props) => {
         value={range}
         style={{background: generateBackground()}}
         onChange={updateSlider}
+        onBlur={submitChanges}
       />
     </div>
   );

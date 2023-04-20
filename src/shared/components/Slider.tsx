@@ -24,8 +24,9 @@ const Slider: FC<Props> = (props) => {
 
   const updateSlider = (e: ChangeEvent<HTMLInputElement>) => {
     setRange(Number(e.target.value));
-    onChange(Number(e.target.value));
   };
+
+  const submitChanges = () => onChange(range);
 
   return (
     <input
@@ -38,6 +39,7 @@ const Slider: FC<Props> = (props) => {
       value={range}
       style={{background: generateBackground()}}
       onChange={updateSlider}
+      onBlur={submitChanges}
     />
   );
 };
