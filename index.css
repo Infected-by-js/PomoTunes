@@ -9,25 +9,25 @@
 
 @layer base {
   [data-theme='focus'] {
-    --color-accent-100: #fff2f2;
-    --color-accent-300: #ffd9d9;
-    --color-accent-500: #ff7c7c;
+    --color-accent-100: #fff3f9;
+    --color-accent-300: #ffd9ec;
+    --color-accent-500: #ffa6d3;
     --color-accent-700: #8c7389;
     --color-accent-900: #795365;
   }
 
   [data-theme='short_break'] {
-    --color-accent-100: #f2fff5;
-    --color-accent-300: #cadfd4;
-    --color-accent-500: #a1c0b6;
+    --color-accent-100: #eff8ed;
+    --color-accent-300: #def1da;
+    --color-accent-500: #bde3b5;
     --color-accent-700: #4f8581;
     --color-accent-900: #21686b;
   }
 
   [data-theme='long_break'] {
-    --color-accent-100: #f2f9ff;
-    --color-accent-300: #d1d8e4;
-    --color-accent-500: #b6b6c8;
+    --color-accent-100: #f3f9ff;
+    --color-accent-300: #d9ecff;
+    --color-accent-500: #a6d3ff;
     --color-accent-700: #5c6578;
     --color-accent-900: #2f4858;
   }

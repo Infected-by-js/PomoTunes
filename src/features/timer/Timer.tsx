@@ -1,19 +1,21 @@
 import {FC, useEffect} from 'react';
 import clsx from 'clsx';
 import {
+  TbAdjustmentsHorizontal,
+  TbBrain,
+  TbBrandYoutube,
   TbPlayerPauseFilled,
   TbPlayerPlayFilled,
-  TbPlayerTrackNextFilled,
+  TbPlayerSkipForwardFilled,
+  TbVolume,
 } from 'react-icons/tb';
-import {ProgressLinear} from '@/shared/components';
+import {Button} from '@/shared/components';
 import {AudioPlayer} from '@/shared/lib/audio-player';
 import eventBus from '@/shared/lib/event-bus';
 import {Notifications} from '@/shared/lib/notifications';
 import {IMAGES, SOUNDS} from '@/shared/utils/constants';
 import {updateTitle} from '@/shared/utils/helpers';
-import Button from './components/Button';
 import Clock from './components/Clock';
-import ModeSwitch from './components/ModeSwitch';
 import {useTimer} from './hooks/useTimer';
 
 interface Props {
@@ -91,35 +93,45 @@ const Timer: FC<Props> = ({
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="fixed top-0 left-0 right-0">
-        <ProgressLinear
-          progress={timerState.progress}
-          placeholderColorClass="accent-300"
-          progressColorClass="accent-500"
-        />
+      <div className={clsx('mb-5 inline-flex items-center justify-center  w-[440px]')}>
+        <hr className={clsx('w-full h-[2px] my-4 border-0 bg-dark font-light')} />
+        <span
+          className={
+            'absolute px-6 flex bg-accent-100 dark:bg-accent-900 items-center text-xl font-bold text-dark -translate-x-1/2 left-1/2'
+          }
+        >
+          <TbBrain size={24} className="mr-3" />
+          Time to Focus
+        </span>
       </div>
 
       <Clock seconds={timerState.timeLeft} />
 
-      <div className="mt-8  grid grid-cols-3  gap-3 grid-rows-2 content-center justify-items-center">
+      <div className="mt-5 flex items-center content-center space-x-2">
+        <Button className={'w-10 h-10 bg-accent-100'}>
+          <TbBrandYoutube size={20} />
+        </Button>
+        <Button className={'w-10 h-10 bg-accent-100'}>
+          <TbAdjustmentsHorizontal size={20} />
+        </Button>
         <Button
           onClick={toggleTimer}
           className={clsx(
-            'w-32 h-32 bg-accent-500 rounded-3xl row-span-2 col-span-2',
+            'w-16 h-16 bg-accent-500',
             timerState.isTicking ? 'border-4 border-dark dark:border-light' : ''
           )}
         >
           {timerState.isTicking ? (
-            <TbPlayerPauseFilled size={32} />
+            <TbPlayerPauseFilled size={30} />
           ) : (
-            <TbPlayerPlayFilled size={32} />
+            <TbPlayerPlayFilled size={30} />
           )}
         </Button>
-
-        <ModeSwitch mode={mode} setMode={setMode} />
-
-        <Button onClick={nextMode} className="w-14 h-14 rounded-xl col-start-3">
-          <TbPlayerTrackNextFilled size={20} />
+        <Button className={'w-10 h-10 bg-accent-100'}>
+          <TbPlayerSkipForwardFilled size={20} />
+        </Button>
+        <Button className={'w-10 h-10 bg-accent-100'}>
+          <TbVolume size={20} />
         </Button>
       </div>
     </div>

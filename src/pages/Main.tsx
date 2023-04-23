@@ -1,22 +1,17 @@
-import {useEffect, useState} from 'react';
-import {TbAdjustmentsHorizontal, TbUser} from 'react-icons/tb';
+import {useEffect} from 'react';
+import {TbBrain, TbCoffee, TbPlant} from 'react-icons/tb';
 import {useSettings} from '@/contexts/settings';
-import {Settings} from '@/features/settings';
 import {Timer} from '@/features/timer';
-import {Player} from '@/features/youtube-player';
-import {GitHubCorner, PageContainer} from '@/shared/components';
+import {Button, GitHubCorner, PageContainer} from '@/shared/components';
 import {Notifications} from '@/shared/lib/notifications';
 
 // TODO: remove flickering page before styles loaded
 const MainPage = () => {
   const {state, dispatch} = useSettings();
-  const [isPlayerReady, setIsPlayerReady] = useState(false);
 
-  const isLongBreak = !(state.round % state.longBreakInterval);
-
-  const onPlayerReady = () => setIsPlayerReady(true);
   const onSetMode = (mode: TimerMode) => dispatch('setMode', {mode});
   const onIncrementRound = () => dispatch('incrementRound');
+  const isLongBreak = !(state.modes.focus.completed % state.longBreakInterval);
 
   useEffect(() => {
     Notifications().requestPermission();
@@ -24,7 +19,7 @@ const MainPage = () => {
 
   return (
     <>
-      {!isPlayerReady && (
+      {/* {!isPlayerReady && (
         <div className="fixed inset-0 bg-accent-100  flex justify-center items-center z-50">
           <div
             className="animate-spin inline-block w-10 h-10 border-[3px] border-current border-t-transparent text-accent-500 rounded-full"
@@ -32,15 +27,28 @@ const MainPage = () => {
             aria-label="loading"
           />
         </div>
-      )}
+      )} */}
 
       <GitHubCorner />
 
       <PageContainer>
         <div className="flex items-center justify-center h-full">
           <div className="">
-            <div className="mb-6">
-              <Player videoId={state.videoId} onReady={onPlayerReady} />
+            {/* <div className="mx-auto mb-8 rounded-full w-40 h-40 flex items-center justify-center border-[3px]  border-dark bg-accent-300 text-dark"></div> */}
+
+            <div className="mb-6 space-x-6 flex items-center justify-center">
+              <Button className={'w-24 h-9 bg-accent-300 text-2xl'}>
+                0
+                <TbBrain size={24} className="ml-3" />
+              </Button>
+              <Button className={'w-24 h-9 bg-accent-100 text-2xl'}>
+                0
+                <TbCoffee size={24} className="ml-3" />
+              </Button>
+              <Button className={'w-24 h-9 bg-accent-100 text-2xl'}>
+                0
+                <TbPlant size={24} className="ml-3" />
+              </Button>
             </div>
 
             <Timer
@@ -52,24 +60,6 @@ const MainPage = () => {
               onSetMode={onSetMode}
               onIncrementRound={onIncrementRound}
             />
-
-            <div className="flex justify-center items-center space-x-4 mt-4">
-              <div className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 focus:dark:text-accent-300 focus:dark:border-accent-300 outline-none dark:bg-accent-700 hover:text-accent-700   hover:border-accent-700 hover:dark:text-accent-500 hover:dark:border-accent-500  border-accent-500 text-accent-500  transition-colors ease-in duration-100">
-                {state.round}
-              </div>
-
-              <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 focus:dark:text-accent-300 focus:dark:border-accent-300 outline-none dark:bg-accent-700 hover:text-accent-700   hover:border-accent-700 hover:dark:text-accent-500 hover:dark:border-accent-500  border-accent-500 text-accent-500  transition-colors ease-in duration-100">
-                <TbUser size={20} />
-              </button>
-
-              <Settings
-                trigger={
-                  <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 focus:dark:text-accent-300 focus:dark:border-accent-300 outline-none dark:bg-accent-700 hover:text-accent-700   hover:border-accent-700 hover:dark:text-accent-500 hover:dark:border-accent-500  border-accent-500 text-accent-500  transition-colors ease-in duration-100">
-                    <TbAdjustmentsHorizontal size={20} />
-                  </button>
-                }
-              />
-            </div>
           </div>
         </div>
       </PageContainer>

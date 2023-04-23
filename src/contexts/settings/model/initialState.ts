@@ -7,26 +7,28 @@ export const initialState: State = {
   isAutoFocus: true,
   longBreakInterval: 4,
   isDarkTheme: false,
-  round: 1,
 
   modes: {
     focus: {
       id: 'focus',
       label: 'Focus',
       time: 25,
-      color: '#ff7c7c',
+      color: '#ffa6d3',
+      completed: 0,
     },
     short_break: {
       id: 'short_break',
       label: 'Short break',
       time: 5,
-      color: '#a1c0b6',
+      color: '#bde3b5',
+      completed: 0,
     },
     long_break: {
       id: 'long_break',
       label: 'Long break',
       time: 15,
-      color: '#b6b6c8',
+      color: '#a6d3ff',
+      completed: 0,
     },
   },
 };
