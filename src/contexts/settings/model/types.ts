@@ -20,10 +20,11 @@ export interface State {
 
 export type Action =
   | {type: 'setMode'; payload: {mode: TimerMode}}
+  | {type: 'completeMode'; payload: {modeCompleted: TimerMode}}
   | {type: 'updateModeTime'; payload: {mode: TimerMode; time: number}}
+  | {type: 'incrementModeCounter'; payload: {mode: TimerMode}}
   | {type: 'setLongBreakInterval'; payload: {interval: number}}
   | {type: 'changeVideoId'; payload: {id: string}}
-  | {type: 'incrementRound'; payload: {mode: TimerMode}}
   | {type: 'toggleAutoBreaks'; payload: null}
   | {type: 'toggleAutoStarts'; payload: null}
   | {type: 'toggleDarkTheme'; payload: null};

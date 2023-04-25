@@ -7,4 +7,3 @@ export {default as Input} from './Input';
 export {default as Slider} from './Slider';
 export {default as SliderWithLabel} from './SliderWithLabel';
 export {default as GitHubCorner} from './GitHubCorner';
-export {default as Button} from './Button';

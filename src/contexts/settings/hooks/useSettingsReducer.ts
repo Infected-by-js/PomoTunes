@@ -18,9 +18,9 @@ export const useSettingsReducer = () => {
     dispatch({type, payload} as Action);
   };
 
-  useEffect(() => {
-    localStorage.setItem(KEY, JSON.stringify(state));
-  }, [state]);
+  // useEffect(() => {
+  //   localStorage.setItem(KEY, JSON.stringify(state));
+  // }, [state]);
 
   return [state, handleDispatch] as const;
 };
