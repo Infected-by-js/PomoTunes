@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {TbBrain, TbCoffee, TbPlant} from 'react-icons/tb';
-import ProgressCountersBtn from '@/components/ProgressCountersBtn';
+import ProgressCountersBtn from './ProgressCountersBtn';
 
 interface Props {
   isDisabled?: boolean;

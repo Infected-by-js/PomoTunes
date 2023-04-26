@@ -5,6 +5,8 @@ export interface ModeSettings {
   color: string;
   completed: number;
 }
+
+export type ModesSettings = {[key in TimerMode]: ModeSettings};
 export interface State {
   videoId: string;
   mode: TimerMode;
@@ -13,9 +15,7 @@ export interface State {
   longBreakInterval: number;
   isDarkTheme: boolean;
 
-  modes: {
-    [key in TimerMode]: ModeSettings;
-  };
+  modes: ModesSettings;
 }
 
 export type Action =

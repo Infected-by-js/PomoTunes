@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from 'react';
-import {useInterval} from './useInterval';
+import useInterval from './useInterval';
 
 interface Props {
   mode: TimerMode;
@@ -23,7 +23,7 @@ interface UseTimer {
   toggle: () => void;
 }
 
-export const useTimer = (props: Props): UseTimer => {
+const useTimer = (props: Props): UseTimer => {
   const {minutes, mode, onStart, onReset, onPause, onComplete} = props;
   const baseTime = minutes * 60;
 
@@ -78,3 +78,5 @@ export const useTimer = (props: Props): UseTimer => {
     reset,
   };
 };
+
+export default useTimer;
