@@ -1,13 +1,28 @@
 import {FC, PropsWithChildren} from 'react';
 
-interface Props extends PropsWithChildren {}
+interface Props extends PropsWithChildren {
+  bgType?: 'video' | 'image';
+  bgLink: string;
+}
 
-const Container: FC<Props> = ({children}) => {
+const Container: FC<Props> = ({bgType = 'video', bgLink, children}) => {
+  const bgClasses =
+    'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full min-h-full object-cover lg:aspect-video';
+
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex-grow bg-accent-100 dark:bg-accent-900 transition-colors ease-in duration-100">
-        <div className="h-full max-w-7xl mx-auto py-4 sm:px-2 lg:px-4">{children}</div>
+    <div className="relative min-h-screen bg-black/75">
+      <div className="absolute inset-0">
+        <div className="relative w-full h-full">
+          <div className={'absolute inset-0 transition-opacity duration-500 ease-in-out'}>
+            {bgType === 'video' ? (
+              <video src={bgLink} className={bgClasses} autoPlay muted loop playsInline />
+            ) : (
+              <img src={bgLink} className={bgClasses} />
+            )}
+          </div>
+        </div>
       </div>
+      <div className="relative">{children}</div>
     </div>
   );
 };

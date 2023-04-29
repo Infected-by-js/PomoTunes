@@ -1,17 +1,36 @@
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  darkMode: ["class", '[data-mode="dark"]'],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: ['class', '[data-mode="dark"]'],
   theme: {
     extend: {
       colors: {
-        light: "#fafaf9",
-        dark: "#471515",
-        gray: "#e2e8f0",
-        "accent-100": "var(--color-accent-100)",
-        "accent-300": "var(--color-accent-300)",
-        "accent-500": "var(--color-accent-500)",
-        "accent-700": "var(--color-accent-700)",
-        "accent-900": "var(--color-accent-900)",
+        primary: 'rgb(var(--color-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
+      },
+
+      animation: {
+        fadeIn: 'fadeIn 0.3s ease',
+        fadeIn1s: 'fadeIn 1s ease',
+        fadeOut: 'fadeOut 0.3s ease',
+      },
+
+      backgroundImage: {
+        gradient: 'var(--gradient)',
+        'gradient-r': 'var(--gradient-r)',
+        'gradient-half': 'var(--gradient-half)',
+      },
+
+      flexGrow: {
+        2: 2,
+        3: 3,
+      },
+
+      inset: {
+        '1/10': '10%',
+        '1/5': '20%',
+        '2/5': '40%',
+        '3/5': '60%',
+        '4/5': '80%',
       },
     },
   },
