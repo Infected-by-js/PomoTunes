@@ -1,14 +1,12 @@
 import {FC, useEffect} from 'react';
 import {ModesSettings} from '@/contexts/settings';
-import ProgressCounters from '@/features/timer/components/ProgressCounters';
-import TimerActions from '@/features/timer/components/TimerActions';
-import TimerStateMsg from '@/features/timer/components/TimerStateMsg';
-import {useSkipFirstEffect} from '@/shared/hooks';
 import eventBus from '@/shared/lib/event-bus';
 import {Notifications} from '@/shared/lib/notifications';
 import {IMAGES, POMODORO_MSG} from '@/shared/utils/constants';
 import {updateTitle} from '@/shared/utils/helpers';
+import Actions from './components/Actions';
 import Clock from './components/Clock';
+import StateMsg from './components/StateMsg';
 import {useTimer} from './hooks';
 import sounds from './utils/sounds';
 
@@ -19,9 +17,7 @@ interface Props {
   isAutoFocus: boolean;
   onIncrementModeCounter: (mode: TimerMode) => void;
   onCompleteMode: (modeCompleted: TimerMode) => void;
-  onJumpToMode: (mode: TimerMode) => void;
-  onOpenSetting: () => void;
-  onOpenSettingsYoutube: () => void;
+  openSettings: () => void;
 }
 const notifications = Notifications();
 
@@ -31,10 +27,8 @@ const Timer: FC<Props> = ({
   isAutoBreaks,
   isAutoFocus,
   onCompleteMode,
-  onJumpToMode,
   onIncrementModeCounter,
-  onOpenSetting,
-  onOpenSettingsYoutube,
+  openSettings,
 }) => {
   const {timerState, toggle, start, reset} = useTimer({
     mode: mode,
@@ -52,20 +46,15 @@ const Timer: FC<Props> = ({
     },
   });
 
-  const withIncrementCount = (action: () => void) => {
-    if (timerState.progress > 50) onIncrementModeCounter(mode);
-    action();
-  };
-
   const toggleTimer = () => {
     sounds.playBtnClick();
     toggle();
   };
 
-  const completeMode = () => withIncrementCount(() => onCompleteMode(mode));
-  const setMode = (newMode: TimerMode) => withIncrementCount(() => onJumpToMode(newMode));
+  const completeMode = () => {
+    if (timerState.progress > 50) onIncrementModeCounter(mode);
+    onCompleteMode(mode);
 
-  useSkipFirstEffect(() => {
     if (mode === 'focus') {
       eventBus.focusEnd.emit();
       if (isAutoBreaks) start();
@@ -74,35 +63,22 @@ const Timer: FC<Props> = ({
 
     eventBus.focusStart.emit();
     if (isAutoFocus) start();
-  }, [mode]);
+  };
 
   useEffect(() => {
     updateTitle(timerState.timeLeft, mode);
   }, [mode, timerState.timeLeft]);
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-3">
-      <ProgressCounters
-        jumpToMode={setMode}
-        mode={mode}
-        progress={timerState.progress}
-        isDisabled={timerState.isTicking}
-        completedFocus={modes.focus.completed}
-        completedBreakShort={modes.short_break.completed}
-        completedBreakLong={modes.long_break.completed}
-      />
-
-      <TimerStateMsg mode={mode} />
-
+    <div className="flex flex-col items-center justify-center space-y-1">
+      <StateMsg value={timerState.progress} mode={mode} />
       <Clock seconds={timerState.timeLeft} />
-
-      <TimerActions
+      <Actions
         isTicking={timerState.isTicking}
-        toggleTimer={toggleTimer}
-        openSettings={onOpenSetting}
-        openSettingsYoutube={onOpenSettingsYoutube}
         nextTimerMode={completeMode}
         resetTimerMode={reset}
+        toggleTimer={toggleTimer}
+        openSettings={openSettings}
       />
     </div>
   );

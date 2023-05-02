@@ -4,43 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @layer base {
-  [data-theme='focus'] {
-    --color-accent-100: #fff3f9;
-    --color-accent-300: #ffd9ec;
-    --color-accent-500: #ffa6d3;
-    --color-accent-700: #8c7389;
-    --color-accent-900: #795365;
-  }
-
-  [data-theme='short_break'] {
-    --color-accent-100: #eff8ed;
-    --color-accent-300: #def1da;
-    --color-accent-500: #bde3b5;
-    --color-accent-700: #4f8581;
-    --color-accent-900: #21686b;
-  }
-
-  [data-theme='long_break'] {
-    --color-accent-100: #f3f9ff;
-    --color-accent-300: #d9ecff;
-    --color-accent-500: #a6d3ff;
-    --color-accent-700: #5c6578;
-    --color-accent-900: #2f4858;
-  }
-} */
-
-/* @layer components {
+@layer components {
   .checkbox {
     position: relative;
     display: flex;
-    width: 40px;
-    height: 20px;
+    width: 62px;
+    height: 30px;
     margin: 0;
     padding: 0;
     background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid transparent;
-    border-radius: 10px;
+    border-radius: 30px;
     outline: none;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
@@ -55,19 +29,19 @@
   }
 
   .checkbox .checkmark {
-    width: 16px;
-    height: 16px;
+    width: 26px;
+    height: 26px;
     display: flex;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 30px;
     transform: translate(2px, 1px);
     transition: all 0.2s ease-in-out;
     position: relative;
   }
 
   .checkbox.checked {
-    background-color: var(--color-checkbox);
-    border-color: var(--color-checkbox);
+    background-color: #f3a952;
+    border-color: #f3a952;
   }
 
   .checkbox.disabled {
@@ -84,29 +58,7 @@
   }
 
   .checkbox input:checked + .checkmark {
-    transform: translate(20px, 1px);
-  }
-
-  .input {
-    padding: 10px;
-    text-align: center;
-    color: var(--color-accent-900);
-    background: rgba(0, 0, 0, 0.1);
-    border: 1px solid transparent;
-    border-radius: 3px;
-    outline: 0;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .input:focus,
-  .input:active {
-    background: transparent;
-    border-color: var(--color-accent-500);
-  }
-
-  .input:focus::placeholder,
-  .input:active::placeholder {
-    color: #aaa;
+    transform: translate(32px, 1px);
   }
 
   .slider {
@@ -118,6 +70,7 @@
     padding: 0;
     margin: 0;
     background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
   }
 
   .slider::-webkit-slider-thumb {
@@ -126,8 +79,8 @@
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, 0.3);
-    background: white;
+    border: 2px solid var(--color-primary);
+    background: var(--color-primary);
     cursor: pointer;
     -webkit-transition: background 0.15s ease-in-out;
     transition: background 0.15s ease-in-out;
@@ -137,7 +90,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--color-primary);
     cursor: pointer;
     -webkit-transition: background 0.15s ease-in-out;
     transition: background 0.15s ease-in-out;
@@ -149,44 +102,29 @@
   }
 
   .slider:disabled::-webkit-slider-thumb {
-    background: #c1c1c1;
-    border-color: #c1c1c1;
+    background: #423d32;
+    border-color: #423d32;
+    cursor: auto;
   }
   .slider:focus::-webkit-slider-thumb {
-    border-color: var(--color-accent-500);
+    border-color: var(--color-primary);
   }
 
   .slider:disabled::-moz-range-thumb {
-    background: #c1c1c1;
-    border-color: #c1c1c1;
+    background: #423d32;
+    border-color: #423d32;
+    cursor: auto;
   }
   .slider:focus::-moz-range-thumb {
-    border-color: var(--color-accent-500);
+    border-color: var(--color-primary);
   }
-
-  .github-corner:hover .octo-arm {
-    animation: octocat-wave 560ms ease-in-out;
-  }
-
-  @keyframes octocat-wave {
-    0%,
-    100% {
-      transform: rotate(0);
-    }
-    20%,
-    60% {
-      transform: rotate(-25deg);
-    }
-    40%,
-    80% {
-      transform: rotate(10deg);
-    }
-  }
-} */
+}
 
 :root {
-  --color-primary: 243 169 82;
-  --color-secondary: 45 39 34;
+  --color-primary-rgba: 243 169 82;
+  --color-secondary-rgba: 45 39 34;
+  --color-primary: #f3a952;
+  --color-secondary: #2c2723;
   --gradient: linear-gradient(360deg, #1f1c2b, rgba(31, 28, 43, 0));
   --gradient-r: linear-gradient(180deg, #1f1c2b, rgba(31, 28, 43, 0));
   --gradient-half: linear-gradient(360deg, #1f1c2b, #1f1c2b 40%, rgba(31, 28, 43, 0));
@@ -225,7 +163,7 @@ a {
 input,
 textarea {
   outline: none;
-  caret-color: #f3a952;
+  caret-color: var(--color-primary);
   color: #fff;
 }
 

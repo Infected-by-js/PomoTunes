@@ -14,7 +14,7 @@ export const updateTheme = (mode: TimerMode, isDarkTheme: boolean) => {
 };
 
 export const generateBackgroundGradient = ({
-  bgColor = 'rgba(0,0,0,0.1)',
+  bgColor = 'rgba(255,255,255,0.1)',
   color,
   min,
   max,

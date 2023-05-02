@@ -1,37 +1,83 @@
-import {PageContainer} from '@/shared/components';
+import {useState} from 'react';
+import {
+  TbBorderCorners,
+  TbBrain,
+  TbBrandGithub,
+  TbCoffee,
+  TbPlant,
+  TbPuzzle2,
+} from 'react-icons/tb';
+import {useSettings} from '@/contexts/settings';
+import {Settings} from '@/features/settings';
+import {Timer} from '@/features/timer';
+import {ButtonIcon, PageContainer} from '@/shared/components';
 import bgVideo from '@/assets/videos/desk.mp4';
 
 const MainPage = () => {
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const {state, dispatch} = useSettings();
+
+  const completeMode = (modeCompleted: TimerMode) => dispatch('completeMode', {modeCompleted});
+  const incrementModeCounter = (mode: TimerMode) => dispatch('incrementModeCounter', {mode});
+  const setTime = (mode: TimerMode, time: number) => dispatch('updateModeTime', {mode, time});
+  const changeInterval = (interval: number) => dispatch('setLongBreakInterval', {interval});
+  const toggleAutoBreaks = () => dispatch('toggleAutoBreaks');
+  const toggleAutoFocus = () => dispatch('toggleAutoStarts');
+
+  const toggleSettings = () => setIsSettingsOpen((prev) => !prev);
+
   return (
     <>
       <PageContainer bgLink={bgVideo} bgType="video">
-        {/* header */}
         <div className="fixed w-screen top-6 z-10">
           <div className="grid grid-cols-3 mx-12">
-            <div className="col-start-2 flex items-center justify-center space-x-2">
-              <button>0</button>
-              <button>0</button>
-              <button>0</button>
+            <div className="col-start-2 flex items-center justify-center space-x-4">
+              <div className="flex items-center justify-center outline-none  px-3 py-px text-lg  bg-black/75 text-white  rounded-lg hover:bg-black/90 transition-color duration-150 ease-in-out">
+                {state.modes.focus.completed} <TbBrain className="ml-2" size={22} />
+              </div>
+              <div className="flex items-center justify-center outline-none  px-3 py-px text-lg  bg-black/75 text-white  rounded-lg hover:bg-black/90 transition-color duration-150 ease-in-out">
+                {state.modes.short_break.completed} <TbCoffee className="ml-2" size={22} />
+              </div>
+              <div className="flex items-center justify-center outline-none  px-3 py-px text-lg  bg-black/75 text-white  rounded-lg hover:bg-black/90 transition-color duration-150 ease-in-out">
+                {state.modes.long_break.completed} <TbPlant className="ml-2" size={22} />
+              </div>
             </div>
 
-            <div className="flex justify-center items-center">
-              <div className="transition-all duration-300 ease-in hover:opacity-50 ">
-                theme
-              </div>
-              <button className="text-white font-bold text-lg mx-2">bgs</button>
-              <button className="text-white font-bold text-lg mx-2">full_screen</button>
+            <div className="flex justify-end items-center">
+              <ButtonIcon onClick={() => {}} icon={TbPuzzle2} className="ml-4" />
+              <ButtonIcon onClick={() => {}} icon={TbBrandGithub} className="ml-4" />
+              <ButtonIcon onClick={() => {}} icon={TbBorderCorners} className="ml-4" />
             </div>
           </div>
         </div>
 
-        {/* body */}
-        <div className="fixed max-h-screen top-28 left-1/2 z-10 transform -translate-x-1/2">
-          <div className="p-4 bg-primary">adsa</div>
+        <div className="fixed max-h-screen top-24 left-1/2 z-10 transform -translate-x-1/2">
+          <Timer
+            mode={state.mode}
+            modes={state.modes}
+            isAutoBreaks={state.isAutoBreaks}
+            isAutoFocus={state.isAutoFocus}
+            onCompleteMode={completeMode}
+            onIncrementModeCounter={incrementModeCounter}
+            openSettings={toggleSettings}
+          />
+
+          {isSettingsOpen && (
+            <Settings
+              modes={state.modes}
+              longBreakInterval={state.longBreakInterval}
+              isAutoBreaks={state.isAutoBreaks}
+              isAutoFocus={state.isAutoFocus}
+              onChangeTime={setTime}
+              onChangeLongBreakInterval={changeInterval}
+              onToggleAutoFocus={toggleAutoFocus}
+              onToggleAutoBreaks={toggleAutoBreaks}
+            />
+          )}
         </div>
 
-        {/* footer */}
         <div className="fixed bottom-6 w-screen flex justify-center items-center">
-          <div className="flex justify-center items-center text-white">footer</div>
+          <div className="flex justify-center items-center text-white">Player</div>
         </div>
       </PageContainer>
     </>

@@ -2,7 +2,6 @@ export interface ModeSettings {
   id: TimerMode;
   label: string;
   time: number;
-  color: string;
   completed: number;
 }
 
@@ -14,7 +13,6 @@ export interface State {
   isAutoFocus: boolean;
   longBreakInterval: number;
   isDarkTheme: boolean;
-
   modes: ModesSettings;
 }
 
