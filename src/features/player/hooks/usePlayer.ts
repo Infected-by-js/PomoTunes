@@ -2,14 +2,13 @@ import {useEffect, useState} from 'react';
 import {YouTubeEvent, YouTubePlayer} from 'react-youtube';
 import eventBus from '@/shared/lib/event-bus';
 
-export const usePlayer = (onReady: () => void) => {
+export const usePlayer = () => {
   const [isReady, setIsReady] = useState(false);
   const [player, setPlayer] = useState<YouTubePlayer>();
 
   const onPlayerReady = (event: YouTubeEvent) => {
     setIsReady(true);
     setPlayer(event.target);
-    onReady();
   };
 
   const play = () => player.playVideo();

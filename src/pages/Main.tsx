@@ -1,4 +1,10 @@
-import {useState} from 'react';
+import bgVideo from '@/assets/videos/desk.mp4';
+import { useSettings } from '@/contexts/settings';
+import { Player } from '@/features/player';
+import { Settings } from '@/features/settings';
+import { Timer } from '@/features/timer';
+import { ButtonIcon, PageContainer } from '@/shared/components';
+import { useState } from 'react';
 import {
   TbBorderCorners,
   TbBrain,
@@ -7,11 +13,6 @@ import {
   TbPlant,
   TbPuzzle2,
 } from 'react-icons/tb';
-import {useSettings} from '@/contexts/settings';
-import {Settings} from '@/features/settings';
-import {Timer} from '@/features/timer';
-import {ButtonIcon, PageContainer} from '@/shared/components';
-import bgVideo from '@/assets/videos/desk.mp4';
 
 const MainPage = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -32,13 +33,13 @@ const MainPage = () => {
         <div className="fixed w-screen top-6 z-10">
           <div className="grid grid-cols-3 mx-12">
             <div className="col-start-2 flex items-center justify-center space-x-4">
-              <div className="flex items-center justify-center outline-none  px-3 py-px text-lg  bg-black/75 text-white  rounded-lg hover:bg-black/90 transition-color duration-150 ease-in-out">
+              <div className="flex items-center justify-center outline-none  px-3 py-px text-lg  bg-black/75 text-white  rounded-lg">
                 {state.modes.focus.completed} <TbBrain className="ml-2" size={22} />
               </div>
-              <div className="flex items-center justify-center outline-none  px-3 py-px text-lg  bg-black/75 text-white  rounded-lg hover:bg-black/90 transition-color duration-150 ease-in-out">
+              <div className="flex items-center justify-center outline-none  px-3 py-px text-lg  bg-black/75 text-white  rounded-lg">
                 {state.modes.short_break.completed} <TbCoffee className="ml-2" size={22} />
               </div>
-              <div className="flex items-center justify-center outline-none  px-3 py-px text-lg  bg-black/75 text-white  rounded-lg hover:bg-black/90 transition-color duration-150 ease-in-out">
+              <div className="flex items-center justify-center outline-none  px-3 py-px text-lg  bg-black/75 text-white  rounded-lg ">
                 {state.modes.long_break.completed} <TbPlant className="ml-2" size={22} />
               </div>
             </div>
@@ -77,7 +78,7 @@ const MainPage = () => {
         </div>
 
         <div className="fixed bottom-6 w-screen flex justify-center items-center">
-          <div className="flex justify-center items-center text-white">Player</div>
+          <Player  />
         </div>
       </PageContainer>
     </>

@@ -29,8 +29,8 @@ const Settings: FC<Props> = ({
     return `${mm}:${ss}`;
   };
   return (
-    <div className="fixed top-[100%] translate-y-1 left-1/2 -translate-x-1/2  bg-black/75 p-2 text-white/75 rounded-lg">
-      <div className="bg-secondary p-1 rounded-lg space-y-1">
+    <div className="fixed top-[100%] translate-y-1 left-1/2 -translate-x-1/2 z-100 bg-black/75 p-2 text-white/75 rounded-lg">
+      <div className="bg-secondary p-2 rounded-lg space-y-1">
         <SliderWithLabel
           label="Focus"
           labelFormatter={labelFormatter}
@@ -57,7 +57,7 @@ const Settings: FC<Props> = ({
         />
       </div>
 
-      <div className="bg-secondary p-1 rounded-lg mt-2">
+      <div className="bg-secondary p-2 rounded-lg mt-2">
         <SliderWithLabel
           label="Long breaks interval"
           value={longBreakInterval}
@@ -67,7 +67,7 @@ const Settings: FC<Props> = ({
         />
       </div>
 
-      <div className="bg-secondary p-1 rounded-lg mt-2 space-y-1">
+      <div className="bg-secondary p-2 rounded-lg mt-2 space-y-2">
         <div className="flex items-center space-x-4">
           <span className="uppercase flex-1 text-sm">Auto focus</span>
           <SwitchBtn value={isAutoFocus} onChange={onToggleAutoFocus} height={20} width={40} />
