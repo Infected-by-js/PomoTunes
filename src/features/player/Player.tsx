@@ -1,48 +1,68 @@
 import {FC} from 'react';
-import {TbChevronUp, TbSearch} from 'react-icons/tb';
+import clsx from 'clsx';
+import YouTubePlayer from 'react-youtube';
+import {useUndoState} from '@/shared/hooks';
+import SearchForm from './components/SearchForm';
+import Toolbar from './components/Toolbar';
 import {usePlayer} from './hooks/usePlayer';
-import image from '@/assets/videos/roof.jpg';
+import {PLAYER_OPTIONS} from './utils/constants';
 
-interface Props {}
+type Status = 'VIDEO_SHOW' | 'VIDEO_HIDE' | 'VIDEO_SEARCH';
+interface Props {
+  videoId: string;
+  onChangeVideoId: (videoId: string) => void;
+}
 
-const Player: FC<Props> = ({}) => {
-  const videoId = 'DgVML3MnpKw';
-  const {isReady, onPlayerReady} = usePlayer();
+const Player: FC<Props> = ({videoId, onChangeVideoId}) => {
+  const {isReady, title, onPlayerReady} = usePlayer();
+  const [status, setStatus, undoStatus] = useUndoState<Status>('VIDEO_HIDE');
+
+  const toggleOpenPlayer = () => {
+    setStatus((prev) => {
+      if (prev === 'VIDEO_SHOW') return 'VIDEO_HIDE';
+      if (prev === 'VIDEO_HIDE') return 'VIDEO_SHOW';
+      return prev;
+    });
+  };
+
+  const submitSearchVideo = (id: string) => {
+    onChangeVideoId(id);
+    setStatus('VIDEO_SHOW');
+  };
 
   return (
     <div>
-      <div className="w-80 h-48 p-1 bg-black/75 rounded-lg">
-        <img src={image} alt="image" className="h-full w-full" />
-      </div>
-      {/* <Youtube
+      <div
+        className={clsx(
+          'w-96 h-56 bg-black/75 rounded-lg transition-all duration-150 ease-in-out',
+          status === 'VIDEO_SHOW' ? 'p-2 opacity-100' : 'opacity-0 pointer-events-none'
+        )}
+      >
+        <YouTubePlayer
           videoId={videoId}
           onReady={onPlayerReady}
-          className={clsx('w-full h-full', isReady ? 'block' : 'none')}
+          className="w-full h-full rounded-lg overflow-hidden"
           iframeClassName="w-full h-full"
-          opts={{
-            playerVars: {
-              autoplay: 0,
-              controls: 0,
-              modestbranding: 1,
-              playsinline: 1,
-              rel: 0,
-              showinfo: 0,
-            },
-          }}
-        /> */}
+          opts={PLAYER_OPTIONS}
+        />
+      </div>
 
-      <div className="mt-1 flex items-center space-x-4 bg-black/75 px-2 py-1 rounded-lg text-[10px] justify-between text-white w-80">
-        <button className="outline-none">
-          <TbChevronUp size={20} />
-        </button>
-        <span className="truncate">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus magnam tempore
-          facilis atque sapiente eligendi officiis culpa ut? Voluptatum doloremque quo velit
-          soluta placeat necessitatibus sunt magnam molestias facilis illo?
-        </span>
-        <button className="outline-none">
-          <TbSearch size={20} />
-        </button>
+      <div className="mt-1 flex items-center  bg-black/75 p-2  rounded-lg text-[10px] justify-between text-white/75 w-96">
+        {status === 'VIDEO_SEARCH' ? (
+          <SearchForm
+            onSubmit={submitSearchVideo}
+            onCancel={() => undoStatus()}
+            videoId={videoId}
+          />
+        ) : (
+          <Toolbar
+            isPlayerOpened={status === 'VIDEO_SHOW'}
+            onToggleOpenPlayer={toggleOpenPlayer}
+            onOpenSearchForm={() => setStatus('VIDEO_SEARCH')}
+            title={title}
+            isPlayerPaused={!isReady}
+          />
+        )}
       </div>
     </div>
   );

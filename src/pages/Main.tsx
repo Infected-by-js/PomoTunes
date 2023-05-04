@@ -1,10 +1,4 @@
-import bgVideo from '@/assets/videos/desk.mp4';
-import { useSettings } from '@/contexts/settings';
-import { Player } from '@/features/player';
-import { Settings } from '@/features/settings';
-import { Timer } from '@/features/timer';
-import { ButtonIcon, PageContainer } from '@/shared/components';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import {
   TbBorderCorners,
   TbBrain,
@@ -13,6 +7,13 @@ import {
   TbPlant,
   TbPuzzle2,
 } from 'react-icons/tb';
+import {useSettings} from '@/contexts/settings';
+import {Player} from '@/features/player';
+import {Settings} from '@/features/settings';
+import {Timer} from '@/features/timer';
+import {ButtonIcon, PageContainer} from '@/shared/components';
+import {Notifications} from '@/shared/lib/notifications';
+import bgVideo from '@/assets/videos/desk.mp4';
 
 const MainPage = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -22,10 +23,15 @@ const MainPage = () => {
   const incrementModeCounter = (mode: TimerMode) => dispatch('incrementModeCounter', {mode});
   const setTime = (mode: TimerMode, time: number) => dispatch('updateModeTime', {mode, time});
   const changeInterval = (interval: number) => dispatch('setLongBreakInterval', {interval});
+  const changeVideoId = (id: string) => dispatch('changeVideoId', {id});
+
   const toggleAutoBreaks = () => dispatch('toggleAutoBreaks');
   const toggleAutoFocus = () => dispatch('toggleAutoStarts');
-
   const toggleSettings = () => setIsSettingsOpen((prev) => !prev);
+
+  useEffect(() => {
+    Notifications().requestPermission();
+  }, []);
 
   return (
     <>
@@ -78,7 +84,7 @@ const MainPage = () => {
         </div>
 
         <div className="fixed bottom-6 w-screen flex justify-center items-center">
-          <Player  />
+          <Player videoId={state.videoId} onChangeVideoId={changeVideoId} />
         </div>
       </PageContainer>
     </>
