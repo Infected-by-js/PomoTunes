@@ -30,7 +30,7 @@ export const usePlayer = () => {
 
     const focusStartCleanUp = eventBus.focusStart.subscribe(() => {
       play();
-      fadeVolume(player, 10);
+      fadeVolume(player, 100);
     });
 
     const focusEndCleanUp = eventBus.focusEnd.subscribe(async () => {

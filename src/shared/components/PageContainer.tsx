@@ -12,7 +12,7 @@ const Container: FC<Props> = ({bgType = 'video', bgLink, children}) => {
   return (
     <div className="relative min-h-screen bg-black/75">
       <div className="absolute inset-0">
-        <div className="relative w-full h-full">
+        <div className="relative w-full h-full pointer-events-none">
           <div className={'absolute inset-0 transition-opacity duration-500 ease-in-out'}>
             {bgType === 'video' ? (
               <video src={bgLink} className={bgClasses} autoPlay muted loop playsInline />
