@@ -1,6 +1,6 @@
 import {useEffect, useRef} from 'react';
 
-export const useInterval = (cb: Function = () => {}, isTicking: boolean) => {
+const useInterval = (cb: Function = () => {}, isTicking: boolean) => {
   const timerRef = useRef<any>(null);
 
   useEffect(() => {
@@ -15,3 +15,5 @@ export const useInterval = (cb: Function = () => {}, isTicking: boolean) => {
     return clear;
   }, [cb, isTicking]);
 };
+
+export default useInterval;

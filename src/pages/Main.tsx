@@ -1,76 +1,128 @@
 import {useEffect, useState} from 'react';
-import {TbAdjustmentsHorizontal, TbUser} from 'react-icons/tb';
+import {
+  TbBorderCorners,
+  TbBrain,
+  TbBrandGithub,
+  TbCoffee,
+  TbPlant,
+  TbPuzzle2,
+} from 'react-icons/tb';
+import {Tooltip} from 'react-tooltip';
 import {useSettings} from '@/contexts/settings';
+import {Player} from '@/features/player';
 import {Settings} from '@/features/settings';
 import {Timer} from '@/features/timer';
-import {Player} from '@/features/youtube-player';
-import {GitHubCorner, PageContainer} from '@/shared/components';
+import {ButtonIcon, PageContainer} from '@/shared/components';
 import {Notifications} from '@/shared/lib/notifications';
+import {GITHUB_URL} from '@/shared/utils/constants';
+import deskBg from '@/assets/backgrounds/desk.mp4';
 
-// TODO: remove flickering page before styles loaded
 const MainPage = () => {
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isUserInteracted, setIsUserInteracted] = useState(false);
   const {state, dispatch} = useSettings();
-  const [isPlayerReady, setIsPlayerReady] = useState(false);
 
-  const isLongBreak = !(state.round % state.longBreakInterval);
+  const completeMode = (modeCompleted: TimerMode) => dispatch('completeMode', {modeCompleted});
+  const incrementModeCounter = (mode: TimerMode) => dispatch('incrementModeCounter', {mode});
+  const setTime = (mode: TimerMode, time: number) => dispatch('updateModeTime', {mode, time});
+  const changeInterval = (interval: number) => dispatch('setLongBreakInterval', {interval});
+  const changeVideoId = (id: string) => dispatch('changeVideoId', {id});
 
-  const onPlayerReady = () => setIsPlayerReady(true);
-  const onSetMode = (mode: TimerMode) => dispatch('setMode', {mode});
-  const onIncrementRound = () => dispatch('incrementRound');
+  const toggleAutoBreaks = () => dispatch('toggleAutoBreaks');
+  const toggleAutoFocus = () => dispatch('toggleAutoStarts');
+  const toggleSettings = () => setIsSettingsOpen((prev) => !prev);
+
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else if (document.exitFullscreen) document.exitFullscreen();
+  };
+  const openGitHub = () => window.open(GITHUB_URL);
 
   useEffect(() => {
-    Notifications().requestPermission();
+    Notifications()
+      .requestPermission()
+      .finally(() => setIsUserInteracted(true));
   }, []);
 
   return (
     <>
-      {!isPlayerReady && (
-        <div className="fixed inset-0 bg-accent-100  flex justify-center items-center z-50">
-          <div
-            className="animate-spin inline-block w-10 h-10 border-[3px] border-current border-t-transparent text-accent-500 rounded-full"
-            role="status"
-            aria-label="loading"
-          />
-        </div>
-      )}
-
-      <GitHubCorner />
-
-      <PageContainer>
-        <div className="flex items-center justify-center h-full">
-          <div className="">
-            <div className="mb-6">
-              <Player videoId={state.videoId} onReady={onPlayerReady} />
+      <PageContainer bgLink={deskBg} bgType="video">
+        <div className="fixed w-screen top-6 z-10">
+          <div className="grid grid-cols-3 mx-12">
+            <div className="col-start-2 flex items-center justify-center space-x-4">
+              <div className="flex items-center justify-center outline-none  px-3 py-px text-lg  bg-black/75 text-white  rounded-lg">
+                {state.modes.focus.completed} <TbBrain className="ml-2" size={22} />
+              </div>
+              <div className="flex items-center justify-center outline-none  px-3 py-px text-lg  bg-black/75 text-white  rounded-lg">
+                {state.modes.short_break.completed} <TbCoffee className="ml-2" size={22} />
+              </div>
+              <div className="flex items-center justify-center outline-none  px-3 py-px text-lg  bg-black/75 text-white  rounded-lg ">
+                {state.modes.long_break.completed} <TbPlant className="ml-2" size={22} />
+              </div>
             </div>
 
-            <Timer
-              minutes={state.modes[state.mode].time}
-              mode={state.mode}
-              isLongBreak={isLongBreak}
-              isAutoBreaks={state.isAutoBreaks}
-              isAutoFocus={state.isAutoFocus}
-              onSetMode={onSetMode}
-              onIncrementRound={onIncrementRound}
-            />
-
-            <div className="flex justify-center items-center space-x-4 mt-4">
-              <div className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 focus:dark:text-accent-300 focus:dark:border-accent-300 outline-none dark:bg-accent-700 hover:text-accent-700   hover:border-accent-700 hover:dark:text-accent-500 hover:dark:border-accent-500  border-accent-500 text-accent-500  transition-colors ease-in duration-100">
-                {state.round}
-              </div>
-
-              <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 focus:dark:text-accent-300 focus:dark:border-accent-300 outline-none dark:bg-accent-700 hover:text-accent-700   hover:border-accent-700 hover:dark:text-accent-500 hover:dark:border-accent-500  border-accent-500 text-accent-500  transition-colors ease-in duration-100">
-                <TbUser size={20} />
-              </button>
-
-              <Settings
-                trigger={
-                  <button className="rounded-full w-8 h-8 flex items-center justify-center border-2  border-dark bg-accent-300 text-dark focus:border-accent-700 focus:text-accent-700 focus:dark:text-accent-300 focus:dark:border-accent-300 outline-none dark:bg-accent-700 hover:text-accent-700   hover:border-accent-700 hover:dark:text-accent-500 hover:dark:border-accent-500  border-accent-500 text-accent-500  transition-colors ease-in duration-100">
-                    <TbAdjustmentsHorizontal size={20} />
-                  </button>
-                }
+            <div className="flex justify-end items-center">
+              <ButtonIcon
+                onClick={() => {}}
+                icon={TbPuzzle2}
+                className="ml-4"
+                data-tooltip-id="nav-tooltip"
+                data-tooltip-content="Background"
+                data-tooltip-offset={15}
               />
+
+              <ButtonIcon
+                onClick={openGitHub}
+                icon={TbBrandGithub}
+                className="ml-4"
+                data-tooltip-id="nav-tooltip"
+                data-tooltip-content="GitHub"
+                data-tooltip-offset={15}
+              />
+
+              <ButtonIcon
+                onClick={toggleFullScreen}
+                icon={TbBorderCorners}
+                className="ml-4"
+                data-tooltip-id="nav-tooltip"
+                data-tooltip-content="FullScreen"
+                data-tooltip-offset={15}
+              />
+
+              <Tooltip id="nav-tooltip" className="bg-black font-bold text-xs rounded-lg" />
             </div>
           </div>
+        </div>
+
+        <div className="fixed max-h-screen top-24 left-1/2 z-10 transform -translate-x-1/2">
+          <Timer
+            mode={state.mode}
+            modes={state.modes}
+            isAutoBreaks={state.isAutoBreaks}
+            isAutoFocus={state.isAutoFocus}
+            onCompleteMode={completeMode}
+            onIncrementModeCounter={incrementModeCounter}
+            openSettings={toggleSettings}
+          />
+
+          {isSettingsOpen && (
+            <Settings
+              modes={state.modes}
+              longBreakInterval={state.longBreakInterval}
+              isAutoBreaks={state.isAutoBreaks}
+              isAutoFocus={state.isAutoFocus}
+              onChangeTime={setTime}
+              onChangeLongBreakInterval={changeInterval}
+              onToggleAutoFocus={toggleAutoFocus}
+              onToggleAutoBreaks={toggleAutoBreaks}
+            />
+          )}
+        </div>
+
+        <div className="fixed bottom-6 w-screen flex justify-center items-center">
+          {isUserInteracted && (
+            <Player videoId={state.videoId} onChangeVideoId={changeVideoId} />
+          )}
         </div>
       </PageContainer>
     </>

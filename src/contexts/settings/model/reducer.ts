@@ -10,6 +10,24 @@ export const reducer = produce((state: State, action: Action): State => {
       break;
     }
 
+    case 'completeMode': {
+      if (payload.modeCompleted !== 'focus') {
+        state.mode = 'focus';
+      } else {
+        const focusCompleted = state.modes.focus.completed;
+        const isLongBreak = focusCompleted && !(focusCompleted % state.longBreakInterval);
+
+        state.mode = isLongBreak ? 'long_break' : 'short_break';
+      }
+
+      break;
+    }
+
+    case 'incrementModeCounter': {
+      state.modes[payload.mode].completed += 1;
+      break;
+    }
+
     case 'updateModeTime': {
       state.modes[payload.mode].time = payload.time;
       break;
@@ -25,11 +43,6 @@ export const reducer = produce((state: State, action: Action): State => {
       break;
     }
 
-    case 'incrementRound': {
-      state.round += 1;
-      break;
-    }
-
     case 'toggleAutoBreaks': {
       state.isAutoBreaks = !state.isAutoBreaks;
       break;
@@ -37,11 +50,6 @@ export const reducer = produce((state: State, action: Action): State => {
 
     case 'toggleAutoStarts': {
       state.isAutoFocus = !state.isAutoFocus;
-      break;
-    }
-
-    case 'toggleDarkTheme': {
-      state.isDarkTheme = !state.isDarkTheme;
       break;
     }
   }

@@ -1,63 +1,90 @@
 import {FC} from 'react';
-import Popup from 'reactjs-popup';
-import {useSettings} from '@/contexts/settings';
-import {SectionAuto, SectionCommon, SectionTime, SectionYoutube} from './components';
-import Header from './components/Header';
+import {ModesSettings} from '@/contexts/settings';
+import {SliderWithLabel, SwitchBtn} from '@/shared/components';
+import {secondsToMinutes} from '@/shared/utils/time-utils';
 
-// FIXME: create custom modal with normal types!!!
-const Settings: any = (close: () => void) => {
-  const {state, dispatch} = useSettings();
+interface Props {
+  modes: ModesSettings;
+  longBreakInterval: number;
+  isAutoFocus: boolean;
+  isAutoBreaks: boolean;
+  onChangeTime: (mode: TimerMode, time: number) => void;
+  onChangeLongBreakInterval: (value: number) => void;
+  onToggleAutoFocus: () => void;
+  onToggleAutoBreaks: () => void;
+}
 
+const Settings: FC<Props> = ({
+  modes,
+  isAutoBreaks,
+  isAutoFocus,
+  longBreakInterval,
+  onChangeTime,
+  onChangeLongBreakInterval,
+  onToggleAutoFocus,
+  onToggleAutoBreaks,
+}) => {
+  const labelFormatter = (v: number) => {
+    const {mm, ss} = secondsToMinutes(v * 60);
+    return `${mm}:${ss}`;
+  };
   return (
-    <div className="rounded-lg bg-accent-100 text-center shadow-xl min-w-[300px]">
-      <div className="px-6 py-5">
-        <Header close={close} />
-
-        <SectionCommon
-          isDarkTheme={state.isDarkTheme}
-          toggleDarkTheme={() => dispatch('toggleDarkTheme')}
-          className="mt-6"
+    <div className="fixed top-[100%] translate-y-1 left-1/2 -translate-x-1/2 z-100 bg-black/75 p-2 text-white/75 rounded-lg">
+      <div className="bg-secondary p-2 rounded-lg space-y-1">
+        <SliderWithLabel
+          label="Focus"
+          labelFormatter={labelFormatter}
+          value={modes.focus.time}
+          onChange={(v) => onChangeTime('focus', v)}
+          min={1}
+          max={90}
         />
-
-        <SectionYoutube
-          videoId={state.videoId}
-          changeVideoId={(id) => dispatch('changeVideoId', {id})}
-          className="mt-6"
+        <SliderWithLabel
+          label="Break short"
+          labelFormatter={labelFormatter}
+          value={modes.short_break.time}
+          onChange={(v) => onChangeTime('short_break', v)}
+          min={1}
+          max={90}
         />
-
-        <SectionTime
-          modes={state.modes}
-          longBreakInterval={state.longBreakInterval}
-          changeModeTime={(mode, time) => dispatch('updateModeTime', {mode, time})}
-          changeLongBreakInterval={(interval) => dispatch('setLongBreakInterval', {interval})}
-          className="mt-6"
+        <SliderWithLabel
+          label="Break long"
+          labelFormatter={labelFormatter}
+          value={modes.long_break.time}
+          onChange={(v) => onChangeTime('long_break', v)}
+          min={1}
+          max={90}
         />
+      </div>
 
-        <SectionAuto
-          isAutoBreaks={state.isAutoBreaks}
-          isAutoFocus={state.isAutoFocus}
-          toggleAutoBreaks={() => dispatch('toggleAutoBreaks')}
-          toggleAutoFocus={() => dispatch('toggleAutoStarts')}
-          className="mt-6"
+      <div className="bg-secondary p-2 rounded-lg mt-2">
+        <SliderWithLabel
+          label="Long breaks interval"
+          value={longBreakInterval}
+          min={0}
+          max={9}
+          onChange={onChangeLongBreakInterval}
         />
+      </div>
+
+      <div className="bg-secondary p-2 rounded-lg mt-2 space-y-2">
+        <div className="flex items-center space-x-4">
+          <span className="uppercase flex-1 text-sm">Auto focus</span>
+          <SwitchBtn value={isAutoFocus} onChange={onToggleAutoFocus} height={20} width={40} />
+        </div>
+
+        <div className="flex items-center space-x-4">
+          <span className="uppercase flex-1 text-sm">Auto breaks</span>
+          <SwitchBtn
+            value={isAutoBreaks}
+            onChange={onToggleAutoBreaks}
+            height={20}
+            width={40}
+          />
+        </div>
       </div>
     </div>
   );
 };
 
-interface Props {
-  trigger?: JSX.Element;
-}
-
-const contentStyle = {background: '#000', borderRadius: '10px'};
-const overlayStyle = {background: 'rgba(0,0,0,0.4)'};
-
-const SettingsPopup: FC<Props> = ({trigger}) => {
-  return (
-    <Popup trigger={trigger} {...{contentStyle, overlayStyle}} modal>
-      {Settings}
-    </Popup>
-  );
-};
-
-export default SettingsPopup;
+export default Settings;

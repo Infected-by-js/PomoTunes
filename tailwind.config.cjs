@@ -1,17 +1,46 @@
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-  darkMode: ["class", '[data-mode="dark"]'],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: ['class', '[data-mode="dark"]'],
   theme: {
     extend: {
       colors: {
-        light: "#fafaf9",
-        dark: "#471515",
-        gray: "#e2e8f0",
-        "accent-100": "var(--color-accent-100)",
-        "accent-300": "var(--color-accent-300)",
-        "accent-500": "var(--color-accent-500)",
-        "accent-700": "var(--color-accent-700)",
-        "accent-900": "var(--color-accent-900)",
+        primary: 'rgb(var(--color-primary-rgba) / <alpha-value>)',
+        secondary: 'rgb(var(--color-secondary-rgba) / <alpha-value>)',
+      },
+
+      animation: {
+        marquee: 'marquee 25s linear infinite',
+        marquee2: 'marquee2 25s linear infinite',
+      },
+
+      keyframes: {
+        marquee: {
+          '0%': {transform: 'translateX(0%)'},
+          '100%': {transform: 'translateX(-100%)'},
+        },
+        marquee2: {
+          '0%': {transform: 'translateX(100%)'},
+          '100%': {transform: 'translateX(0%)'},
+        },
+      },
+
+      backgroundImage: {
+        gradient: 'var(--gradient)',
+        'gradient-r': 'var(--gradient-r)',
+        'gradient-half': 'var(--gradient-half)',
+      },
+
+      flexGrow: {
+        2: 2,
+        3: 3,
+      },
+
+      inset: {
+        '1/10': '10%',
+        '1/5': '20%',
+        '2/5': '40%',
+        '3/5': '60%',
+        '4/5': '80%',
       },
     },
   },

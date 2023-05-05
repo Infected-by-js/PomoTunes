@@ -1,23 +1,21 @@
+import {POMODORO_MSG} from './constants';
 import {secondsToTime} from './time-utils';
 
 export const updateTitle = (seconds: number, mode: TimerMode) => {
   const {mm, ss} = secondsToTime(seconds);
-  const message = mode === 'focus' ? 'Time to focus!' : 'Time for a break!';
+  const message = mode === 'focus' ? POMODORO_MSG.FOCUS : POMODORO_MSG.BREAK;
 
-  document.title = `${mm}:${ss} - ${message} | PomoTunes`;
-};
-
-export const updateTheme = (mode: TimerMode, isDarkTheme: boolean) => {
-  document.documentElement.dataset.theme = mode;
-  document.documentElement.dataset.mode = isDarkTheme ? 'dark' : 'light';
+  document.title = `${mm}:${ss} - ${message}! | PomoTunes`;
 };
 
 export const generateBackgroundGradient = ({
+  bgColor = 'rgba(255,255,255,0.1)',
   color,
   min,
   max,
   value,
 }: {
+  bgColor?: string;
   color: string;
   min: number;
   max: number;
@@ -25,5 +23,5 @@ export const generateBackgroundGradient = ({
 }) => {
   const percentage = ((value - min) / (max - min)) * 100;
 
-  return `linear-gradient(to right, ${color} ${percentage}%, rgba(0, 0, 0, 0.1) ${percentage}%)`;
+  return `linear-gradient(to right, ${color} ${percentage}%, ${bgColor} ${percentage}%)`;
 };

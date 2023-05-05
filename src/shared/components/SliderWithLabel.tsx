@@ -10,37 +10,39 @@ interface Props {
   onChange: (value: number) => void;
   labelFormatter?: (value: number) => string | number;
   isDisabled?: boolean;
+  width?: number;
 }
 
-const SliderWithLabel: FC<Props> = (props) => {
-  const {label, color, min = 1, max = 90, value, labelFormatter, onChange, isDisabled} = props;
+const SliderWithLabel: FC<Props> = ({
+  label,
+  color,
+  width,
+  min = 1,
+  max = 90,
+  value,
+  labelFormatter,
+  onChange,
+  isDisabled,
+}) => {
   const [range, setRange] = useState(value);
 
   const generateBackground = () => {
-    if (isDisabled) return 'rgba(0,0,0,0.1)';
+    if (isDisabled) return 'rgba(255,255,255,0.1)';
 
-    const bgColor = color ? color : 'var(--color-accent-500)';
+    const bgColor = color ? color : 'var(--color-primary)';
 
     return generateBackgroundGradient({color: bgColor, value: range, min, max});
   };
 
   const updateSlider = (e: ChangeEvent<HTMLInputElement>) => {
-    setRange(Number(e.target.value));
+    const value = Number(e.target.value);
+    setRange(value);
+    onChange(value);
   };
 
-  const submitChanges = () => onChange(range);
-
   return (
-    <div className="flex items-center flex-col w-full">
-      <div className="mb-2 flex items-center justify-between w-full">
-        <span>{label}</span>
-        <span
-          className="ml-4 flex items-center justify-center text-sm font-bold text-dark min-w-[56px] h-6 rounded-lg px-1"
-          style={{background: generateBackground()}}
-        >
-          {labelFormatter ? labelFormatter(range) : range}
-        </span>
-      </div>
+    <div className="flex items-center w-full space-x-4">
+      <span className="uppercase whitespace-nowrap flex-1 text-sm">{label}</span>
 
       <input
         className="slider"
@@ -50,10 +52,11 @@ const SliderWithLabel: FC<Props> = (props) => {
         min={min}
         max={max}
         value={range}
-        style={{background: generateBackground()}}
+        style={{background: generateBackground(), width: width ? width + 'px' : 'auto'}}
         onChange={updateSlider}
-        onBlur={submitChanges}
       />
+
+      <span className="ml-4 text-sm">{labelFormatter ? labelFormatter(range) : range}</span>
     </div>
   );
 };
