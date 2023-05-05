@@ -5,7 +5,6 @@ export const initialState: State = {
   isAutoBreaks: true,
   isAutoFocus: true,
   longBreakInterval: 4,
-  isDarkTheme: false,
 
   videoId: 'DgVML3MnpKw',
 

@@ -49,7 +49,7 @@ const SearchForm: FC<Props> = ({videoId, onSubmit, onCancel}) => {
         onInput={onInputVideoUrl}
         spellCheck="false"
         autoFocus
-        className="bg-secondary w-full placeholder:text-[10px] text-[8px]  px-3 py-1 rounded-[4px]"
+        className="bg-secondary w-full placeholder:text-[10px] outline-none text-[8px]  px-3 py-1 rounded-[4px]"
         placeholder="Paste a YouTube video URL here"
       />
       <button className="outline-none" type="submit">

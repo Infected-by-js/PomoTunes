@@ -7,16 +7,19 @@ import {
   TbPlant,
   TbPuzzle2,
 } from 'react-icons/tb';
+import {Tooltip} from 'react-tooltip';
 import {useSettings} from '@/contexts/settings';
 import {Player} from '@/features/player';
 import {Settings} from '@/features/settings';
 import {Timer} from '@/features/timer';
 import {ButtonIcon, PageContainer} from '@/shared/components';
 import {Notifications} from '@/shared/lib/notifications';
-import bgVideo from '@/assets/videos/desk.mp4';
+import {GITHUB_URL} from '@/shared/utils/constants';
+import deskBg from '@/assets/backgrounds/desk.mp4';
 
 const MainPage = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isUserInteracted, setIsUserInteracted] = useState(false);
   const {state, dispatch} = useSettings();
 
   const completeMode = (modeCompleted: TimerMode) => dispatch('completeMode', {modeCompleted});
@@ -29,13 +32,21 @@ const MainPage = () => {
   const toggleAutoFocus = () => dispatch('toggleAutoStarts');
   const toggleSettings = () => setIsSettingsOpen((prev) => !prev);
 
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else if (document.exitFullscreen) document.exitFullscreen();
+  };
+  const openGitHub = () => window.open(GITHUB_URL);
+
   useEffect(() => {
-    Notifications().requestPermission();
+    Notifications()
+      .requestPermission()
+      .finally(() => setIsUserInteracted(true));
   }, []);
 
   return (
     <>
-      <PageContainer bgLink={bgVideo} bgType="video">
+      <PageContainer bgLink={deskBg} bgType="video">
         <div className="fixed w-screen top-6 z-10">
           <div className="grid grid-cols-3 mx-12">
             <div className="col-start-2 flex items-center justify-center space-x-4">
@@ -51,9 +62,34 @@ const MainPage = () => {
             </div>
 
             <div className="flex justify-end items-center">
-              <ButtonIcon onClick={() => {}} icon={TbPuzzle2} className="ml-4" />
-              <ButtonIcon onClick={() => {}} icon={TbBrandGithub} className="ml-4" />
-              <ButtonIcon onClick={() => {}} icon={TbBorderCorners} className="ml-4" />
+              <ButtonIcon
+                onClick={() => {}}
+                icon={TbPuzzle2}
+                className="ml-4"
+                data-tooltip-id="nav-tooltip"
+                data-tooltip-content="Background"
+                data-tooltip-offset={15}
+              />
+
+              <ButtonIcon
+                onClick={openGitHub}
+                icon={TbBrandGithub}
+                className="ml-4"
+                data-tooltip-id="nav-tooltip"
+                data-tooltip-content="GitHub"
+                data-tooltip-offset={15}
+              />
+
+              <ButtonIcon
+                onClick={toggleFullScreen}
+                icon={TbBorderCorners}
+                className="ml-4"
+                data-tooltip-id="nav-tooltip"
+                data-tooltip-content="FullScreen"
+                data-tooltip-offset={15}
+              />
+
+              <Tooltip id="nav-tooltip" className="bg-black font-bold text-xs rounded-lg" />
             </div>
           </div>
         </div>
@@ -84,7 +120,9 @@ const MainPage = () => {
         </div>
 
         <div className="fixed bottom-6 w-screen flex justify-center items-center">
-          <Player videoId={state.videoId} onChangeVideoId={changeVideoId} />
+          {isUserInteracted && (
+            <Player videoId={state.videoId} onChangeVideoId={changeVideoId} />
+          )}
         </div>
       </PageContainer>
     </>

@@ -52,11 +52,6 @@ export const reducer = produce((state: State, action: Action): State => {
       state.isAutoFocus = !state.isAutoFocus;
       break;
     }
-
-    case 'toggleDarkTheme': {
-      state.isDarkTheme = !state.isDarkTheme;
-      break;
-    }
   }
 
   return state;

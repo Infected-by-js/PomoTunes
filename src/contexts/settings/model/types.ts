@@ -12,7 +12,6 @@ export interface State {
   isAutoBreaks: boolean;
   isAutoFocus: boolean;
   longBreakInterval: number;
-  isDarkTheme: boolean;
   modes: ModesSettings;
 }
 
@@ -24,8 +23,7 @@ export type Action =
   | {type: 'setLongBreakInterval'; payload: {interval: number}}
   | {type: 'changeVideoId'; payload: {id: string}}
   | {type: 'toggleAutoBreaks'; payload: null}
-  | {type: 'toggleAutoStarts'; payload: null}
-  | {type: 'toggleDarkTheme'; payload: null};
+  | {type: 'toggleAutoStarts'; payload: null};
 
 export type Dispatch = <T extends Action['type']>(
   type: T,

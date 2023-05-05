@@ -8,11 +8,6 @@ export const updateTitle = (seconds: number, mode: TimerMode) => {
   document.title = `${mm}:${ss} - ${message}! | PomoTunes`;
 };
 
-export const updateTheme = (mode: TimerMode, isDarkTheme: boolean) => {
-  document.documentElement.dataset.theme = mode;
-  document.documentElement.dataset.mode = isDarkTheme ? 'dark' : 'light';
-};
-
 export const generateBackgroundGradient = ({
   bgColor = 'rgba(255,255,255,0.1)',
   color,

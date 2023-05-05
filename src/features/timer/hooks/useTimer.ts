@@ -56,7 +56,6 @@ const useTimer = (props: Props): UseTimer => {
   }, [isTicking]);
 
   const reset = useCallback(() => {
-    setIsTicking(false);
     setTimeLeft(baseTime);
     onReset?.();
   }, [onReset, baseTime]);

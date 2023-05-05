@@ -7,7 +7,7 @@ interface Props extends PropsWithChildren {
 
 const Container: FC<Props> = ({bgType = 'video', bgLink, children}) => {
   const bgClasses =
-    'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full min-h-full object-cover lg:aspect-video';
+    'fixed top-0 left-0 right-0 bottom-0 w-full h-full object-cover lg:aspect-video';
 
   return (
     <div className="relative min-h-screen bg-black/75">
