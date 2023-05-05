@@ -1,5 +1,6 @@
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {YouTubeEvent, YouTubePlayer} from 'react-youtube';
+import eventBus from '@/shared/lib/event-bus';
 import {fadeVolume} from '../utils/fadeVolume';
 
 export const usePlayer = () => {
@@ -22,14 +23,32 @@ export const usePlayer = () => {
 
   const play = () => player.playVideo();
   const pause = () => player.pauseVideo();
-  const setVolume = (value: number) => fadeVolume(player, value);
+
+  useEffect(() => {
+    const playCleanUp = eventBus.startTimer.subscribe(play);
+    const pauseCleanUp = eventBus.pauseTimer.subscribe(pause);
+
+    const focusStartCleanUp = eventBus.focusStart.subscribe(() => {
+      play();
+      fadeVolume(player, 10);
+    });
+
+    const focusEndCleanUp = eventBus.focusEnd.subscribe(async () => {
+      await fadeVolume(player, 10);
+      pause();
+    });
+
+    return () => {
+      playCleanUp();
+      pauseCleanUp();
+      focusStartCleanUp();
+      focusEndCleanUp();
+    };
+  }, [player]);
 
   return {
     isReady,
     title,
-    play,
-    pause,
-    setVolume,
     onPlayerReady,
     onPlayerEnd,
   };
