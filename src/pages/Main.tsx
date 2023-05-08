@@ -15,7 +15,7 @@ import {Timer} from '@/features/timer';
 import {ButtonIcon, PageContainer} from '@/shared/components';
 import {Notifications} from '@/shared/lib/notifications';
 import {GITHUB_URL} from '@/shared/utils/constants';
-import deskBg from '@/assets/backgrounds/desk.mp4';
+import deskBg from '@/assets/backgrounds/775146.gif';
 
 const MainPage = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -46,7 +46,7 @@ const MainPage = () => {
 
   return (
     <>
-      <PageContainer bgLink={deskBg} bgType="video">
+      <PageContainer bgLink={deskBg} bgType="image">
         <div className="fixed w-screen top-6 z-10">
           <div className="grid grid-cols-3 mx-12">
             <div className="col-start-2 flex items-center justify-center space-x-4">
