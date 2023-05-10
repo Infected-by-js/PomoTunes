@@ -15,9 +15,12 @@ import {Timer} from '@/features/timer';
 import {ButtonIcon, PageContainer} from '@/shared/components';
 import {Notifications} from '@/shared/lib/notifications';
 import {GITHUB_URL} from '@/shared/utils/constants';
-import deskBg from '@/assets/backgrounds/775146.gif';
+import * as backgrounds from '@/assets/backgrounds';
+
+const sets = Object.keys(backgrounds);
 
 const MainPage = () => {
+  const [background, setBackground] = useState(backgrounds.lonely_fire);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isUserInteracted, setIsUserInteracted] = useState(false);
   const {state, dispatch} = useSettings();
@@ -42,11 +45,19 @@ const MainPage = () => {
     Notifications()
       .requestPermission()
       .finally(() => setIsUserInteracted(true));
+
+    setInterval(() => {
+      const inx = Math.round(Math.random() * sets.length);
+      const bgName = sets[inx] as keyof typeof backgrounds;
+      const bg = backgrounds[bgName];
+
+      setBackground(bg);
+    }, 15_000);
   }, []);
 
   return (
     <>
-      <PageContainer bgLink={deskBg} bgType="image">
+      <PageContainer background={background}>
         <div className="fixed w-screen top-6 z-10">
           <div className="grid grid-cols-3 mx-12">
             <div className="col-start-2 flex items-center justify-center space-x-4">
