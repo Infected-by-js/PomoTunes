@@ -22,7 +22,6 @@ const sets = Object.keys(backgrounds);
 const MainPage = () => {
   const [background, setBackground] = useState(backgrounds.lonely_fire);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isUserInteracted, setIsUserInteracted] = useState(false);
   const {state, dispatch} = useSettings();
 
   const completeMode = (modeCompleted: TimerMode) => dispatch('completeMode', {modeCompleted});
@@ -42,17 +41,16 @@ const MainPage = () => {
   const openGitHub = () => window.open(GITHUB_URL);
 
   useEffect(() => {
-    Notifications()
-      .requestPermission()
-      .finally(() => setIsUserInteracted(true));
+    Notifications().requestPermission();
 
     setInterval(() => {
-      const inx = Math.round(Math.random() * sets.length);
+      const inx = Math.round(Math.random() * sets.length - 1);
       const bgName = sets[inx] as keyof typeof backgrounds;
       const bg = backgrounds[bgName];
+      console.log(bgName);
 
       setBackground(bg);
-    }, 15_000);
+    }, 2_000);
   }, []);
 
   return (
@@ -131,9 +129,7 @@ const MainPage = () => {
         </div>
 
         <div className="fixed bottom-6 w-screen flex justify-center items-center">
-          {isUserInteracted && (
-            <Player videoId={state.videoId} onChangeVideoId={changeVideoId} />
-          )}
+          <Player videoId={state.videoId} onChangeVideoId={changeVideoId} />
         </div>
       </PageContainer>
     </>
