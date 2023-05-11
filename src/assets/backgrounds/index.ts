@@ -12,7 +12,6 @@ import player2 from './player2.gif';
 import robot_alley from './robot_alley.gif';
 import sandcastle from './sandcastle.gif';
 import spaceport from './spaceport.gif';
-import stacking_houses_on_a_windy_day from './stacking_houses_on_a_windy_day.gif';
 import thieves from './thieves.gif';
 import tree_lake from './tree_lake.gif';
 import urban from './urban.gif';
@@ -32,7 +31,6 @@ export {
   robot_alley,
   sandcastle,
   spaceport,
-  stacking_houses_on_a_windy_day,
   thieves,
   tree_lake,
   urban,

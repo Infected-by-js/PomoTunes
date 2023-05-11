@@ -17,10 +17,8 @@ import {Notifications} from '@/shared/lib/notifications';
 import {GITHUB_URL} from '@/shared/utils/constants';
 import * as backgrounds from '@/assets/backgrounds';
 
-const sets = Object.keys(backgrounds);
-
 const MainPage = () => {
-  const [background, setBackground] = useState(backgrounds.lonely_fire);
+  const [background] = useState(backgrounds.lonely_fire);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const {state, dispatch} = useSettings();
 
@@ -42,15 +40,6 @@ const MainPage = () => {
 
   useEffect(() => {
     Notifications().requestPermission();
-
-    setInterval(() => {
-      const inx = Math.round(Math.random() * sets.length - 1);
-      const bgName = sets[inx] as keyof typeof backgrounds;
-      const bg = backgrounds[bgName];
-      console.log(bgName);
-
-      setBackground(bg);
-    }, 2_000);
   }, []);
 
   return (

@@ -1,8 +1,7 @@
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 import clsx from 'clsx';
 import YouTubePlayer from 'react-youtube';
 import {useUndoState} from '@/shared/hooks';
-import eventBus from '@/shared/lib/event-bus';
 import SearchForm from './components/SearchForm';
 import Toolbar from './components/Toolbar';
 import {usePlayer} from './hooks/usePlayer';
@@ -15,7 +14,7 @@ interface Props {
 }
 
 const Player: FC<Props> = ({videoId, onChangeVideoId}) => {
-  const {isReady, title, play, pause, setVolume, onPlayerReady, onPlayerEnd} = usePlayer();
+  const {isReady, title, onPlayerReady, onPlayerEnd} = usePlayer();
   const [status, setStatus, undoStatus] = useUndoState<Status>('VIDEO_HIDE');
 
   const toggleOpenPlayer = () => {
@@ -30,28 +29,6 @@ const Player: FC<Props> = ({videoId, onChangeVideoId}) => {
     onChangeVideoId(id);
     setStatus('VIDEO_SHOW');
   };
-
-  useEffect(() => {
-    const playCleanUp = eventBus.startTimer.subscribe(play);
-    const pauseCleanUp = eventBus.pauseTimer.subscribe(pause);
-
-    const focusStartCleanUp = eventBus.focusStart.subscribe(() => {
-      play();
-      setVolume(100);
-    });
-
-    const focusEndCleanUp = eventBus.focusEnd.subscribe(async () => {
-      await setVolume(10);
-      pause();
-    });
-
-    return () => {
-      playCleanUp();
-      pauseCleanUp();
-      focusStartCleanUp();
-      focusEndCleanUp();
-    };
-  }, [isReady]);
 
   return (
     <div>
