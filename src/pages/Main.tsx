@@ -32,9 +32,7 @@ const MainPage = () => {
   const openGitHub = () => window.open(GITHUB_URL);
 
   useEffect(() => {
-    Notifications()
-      .requestPermission()
-      .finally(() => setIsUserInteracted(true));
+    Notifications().requestPermission();
   }, []);
 
   return (
