@@ -1,10 +1,9 @@
 import {AudioPlayer} from '@/shared/lib/audio-player';
-import {SOUNDS} from '@/shared/utils/constants';
+import {alert_02, alert_06, buttonPress} from '@/assets/sounds';
 
-//* set here to avoid refetch audio
-const buttonAudio = new AudioPlayer({src: SOUNDS.BUTTON_PRESS});
-const breakAudio = new AudioPlayer({src: SOUNDS.SOUND_1});
-const focusAudio = new AudioPlayer({src: SOUNDS.BELL});
+const buttonAudio = new AudioPlayer({src: buttonPress});
+const breakAudio = new AudioPlayer({src: alert_06});
+const focusAudio = new AudioPlayer({src: alert_02});
 
 export default {
   playBtnClick: () => buttonAudio.play(),

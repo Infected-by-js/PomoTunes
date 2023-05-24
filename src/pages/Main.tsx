@@ -1,12 +1,5 @@
 import {useEffect, useState} from 'react';
-import {
-  TbBorderCorners,
-  TbBrain,
-  TbBrandGithub,
-  TbCoffee,
-  TbPlant,
-  TbPuzzle2,
-} from 'react-icons/tb';
+import {TbBorderCorners, TbBrain, TbBrandGithub, TbCoffee, TbPlant} from 'react-icons/tb';
 import {Tooltip} from 'react-tooltip';
 import {useSettings} from '@/contexts/settings';
 import {Player} from '@/features/player';
@@ -15,11 +8,11 @@ import {Timer} from '@/features/timer';
 import {ButtonIcon, PageContainer} from '@/shared/components';
 import {Notifications} from '@/shared/lib/notifications';
 import {GITHUB_URL} from '@/shared/utils/constants';
-import deskBg from '@/assets/backgrounds/desk.mp4';
+import * as backgrounds from '@/assets/backgrounds';
 
 const MainPage = () => {
+  const [background] = useState(backgrounds.lonely_fire);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isUserInteracted, setIsUserInteracted] = useState(false);
   const {state, dispatch} = useSettings();
 
   const completeMode = (modeCompleted: TimerMode) => dispatch('completeMode', {modeCompleted});
@@ -46,7 +39,7 @@ const MainPage = () => {
 
   return (
     <>
-      <PageContainer bgLink={deskBg} bgType="video">
+      <PageContainer background={background}>
         <div className="fixed w-screen top-6 z-10">
           <div className="grid grid-cols-3 mx-12">
             <div className="col-start-2 flex items-center justify-center space-x-4">
@@ -62,15 +55,6 @@ const MainPage = () => {
             </div>
 
             <div className="flex justify-end items-center">
-              <ButtonIcon
-                onClick={() => {}}
-                icon={TbPuzzle2}
-                className="ml-4"
-                data-tooltip-id="nav-tooltip"
-                data-tooltip-content="Background"
-                data-tooltip-offset={15}
-              />
-
               <ButtonIcon
                 onClick={openGitHub}
                 icon={TbBrandGithub}
@@ -120,9 +104,7 @@ const MainPage = () => {
         </div>
 
         <div className="fixed bottom-6 w-screen flex justify-center items-center">
-          {isUserInteracted && (
-            <Player videoId={state.videoId} onChangeVideoId={changeVideoId} />
-          )}
+          <Player videoId={state.videoId} onChangeVideoId={changeVideoId} />
         </div>
       </PageContainer>
     </>
