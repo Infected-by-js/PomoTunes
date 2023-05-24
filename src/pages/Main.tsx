@@ -1,12 +1,5 @@
 import {useEffect, useState} from 'react';
-import {
-  TbBorderCorners,
-  TbBrain,
-  TbBrandGithub,
-  TbCoffee,
-  TbPlant,
-  TbPuzzle2,
-} from 'react-icons/tb';
+import {TbBorderCorners, TbBrain, TbBrandGithub, TbCoffee, TbPlant} from 'react-icons/tb';
 import {Tooltip} from 'react-tooltip';
 import {useSettings} from '@/contexts/settings';
 import {Player} from '@/features/player';
@@ -60,15 +53,6 @@ const MainPage = () => {
             </div>
 
             <div className="flex justify-end items-center">
-              <ButtonIcon
-                onClick={() => {}}
-                icon={TbPuzzle2}
-                className="ml-4"
-                data-tooltip-id="nav-tooltip"
-                data-tooltip-content="Background"
-                data-tooltip-offset={15}
-              />
-
               <ButtonIcon
                 onClick={openGitHub}
                 icon={TbBrandGithub}
