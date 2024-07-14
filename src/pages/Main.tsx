@@ -11,7 +11,7 @@ import {GITHUB_URL} from '@/shared/utils/constants';
 import * as backgrounds from '@/assets/backgrounds';
 
 const MainPage = () => {
-  const [background] = useState(backgrounds.lonely_fire);
+  const [background] = useState(backgrounds.bluebalcony);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const {state, dispatch} = useSettings();
 

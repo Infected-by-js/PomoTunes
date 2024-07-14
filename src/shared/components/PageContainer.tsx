@@ -12,7 +12,7 @@ const Container: FC<Props> = ({background, children}) => {
           <div className={'absolute inset-0 transition-opacity duration-500 ease-in-out'}>
             <img
               src={background}
-              className="fixed top-0 left-0 right-0 bottom-0 w-full h-full object-cover lg:aspect-video"
+              className="fixed top-0 left-0 right-0 bottom-0 w-full h-full object-cover lg:aspect-video pointer-events-none select-none"
             />
           </div>
         </div>
