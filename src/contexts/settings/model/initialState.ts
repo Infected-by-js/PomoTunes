@@ -6,7 +6,7 @@ export const initialState: State = {
   isAutoFocus: true,
   longBreakInterval: 4,
 
-  videoId: 'DgVML3MnpKw',
+  videoId: 'Na0w3Mz46GA',
 
   modes: {
     focus: {
